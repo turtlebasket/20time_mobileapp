@@ -1,39 +1,62 @@
 /**
- * A THING!
+ * Main page for the app
  * 
  */
 
-import React, { Component } from 'react';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from './screens/Home';
-import About from './screens/About';
+ // Project
+import Profile from './screens/Profile';
+import Todos from './screens/Todos';
 import ShibeApi from './screens/ShibeApi';
+import appColors from "./Colors";
+
+// External
+import React, { Component } from 'react';
+import { StatusBar, View } from 'react-native';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { 
+  faCheck,
+  faCheckCircle,
+  faDog, 
+  faUserCircle,
+} from '@fortawesome/free-solid-svg-icons'
 
 const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator tabBarOptions={{
-        // inactiveTintColor: '#00bd87',
-        activeTintColor: '#00e7a5',
-        inactiveTintColor: '#00805b'
-      }}>
-        <Tab.Screen name="Home" component={Home} options={
+      <View>
+        <StatusBar
+          backgroundColor={appColors.darker}
+        />
+      </View>
+      <Tab.Navigator 
+        tabBarOptions={{
+          activeTintColor: appColors.green1,
+          inactiveTintColor: appColors.lightGray,
+          showLabel: false,
+          style: { 
+            backgroundColor: appColors.darker,
+            height: 52,
+            borderTopWidth: 0,
+          }
+        }}
+      >
+        <Tab.Screen name="Home" component={Todos} options={
           {tabBarIcon: ({color, size}) => (
-            <Icon name="home" size={size} color={color} />
+            <FontAwesomeIcon icon={faCheck} color={color} size={size}/>
             )}
         } />
         <Tab.Screen name="Shibe API" component={ShibeApi} options={
           {tabBarIcon: ({color, size}) => (
-            <Icon name="image" size={size} color={color} />
+            <FontAwesomeIcon icon={faDog} color={color} size={size}/>
           )}
         } />
-        <Tab.Screen name="About" component={About} options={
+        <Tab.Screen name="Profile" component={Profile} options={
           {tabBarIcon: ({color, size}) => (
-            <Icon name="info" size={size} color={color} />
+            <FontAwesomeIcon icon={faUserCircle} color={color} size={size}/>
           )}
         } />
       </Tab.Navigator>

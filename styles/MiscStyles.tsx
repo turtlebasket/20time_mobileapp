@@ -1,4 +1,3 @@
-
 import {StyleSheet} from 'react-native'
 
 const miscstyles = StyleSheet.create({
