@@ -10,17 +10,18 @@ const styles = StyleSheet.create({
     backgroundColor: appColors.black,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    width: '100%'
   },
 
   card: {
     // flex: 1,
-    backgroundColor: appColors.darker,
+    backgroundColor: appColors.dark,
     paddingHorizontal: 24,
     paddingVertical: 16,
     marginHorizontal: 12,
     marginTop: 12,
     borderRadius: 18,
-    width: '94%'
+    width: '94%',
   },
 
   cardGreen: {
@@ -53,6 +54,23 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 
+  pageTitleLarge: {
+    fontFamily: "Nunito",
+    textAlign: "left",
+    color: appColors.white,
+    fontWeight: 'bold',
+    fontSize: 26,
+  },
+
+  pageTitleLargeGreen: {
+    fontFamily: "Nunito",
+    // textAlign: "left",
+    textAlign: "center",
+    color: appColors.green1,
+    fontWeight: 'bold',
+    fontSize: 26,
+  },
+
   pageTitleGreen: {
     textAlign: "left",
     color: appColors.green1,
@@ -74,11 +92,29 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
+  pageTextLargeGreen: {
+    fontFamily: "Nunito",
+    textAlign: "left",
+    color: appColors.green1,
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+
   pageTextGreenBold: {
     color: appColors.green1,
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'left',
+  },
+
+  lightGreen: {
+    color: appColors.white,
+    backgroundColor: appColors.green1
+  },
+
+  lightGray: {
+    color: appColors.white,
+    backgroundColor: appColors.lightGray
   },
 
   customButton: {
@@ -97,7 +133,12 @@ const styles = StyleSheet.create({
 
   ctrlBtns: {
     marginTop: 10 
+  },
+
+  strikethrough: {
+    textDecorationLine: 'line-through'
   }
+
 });
 
 export default styles;

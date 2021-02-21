@@ -5,7 +5,7 @@
 
  // Project
 import Profile from './screens/Profile';
-import Todos from './screens/Todos';
+import ListView from './screens/ListView';
 import ShibeApi from './screens/ShibeApi';
 import appColors from "./Colors";
 
@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { 
   faCheck,
   faCheckCircle,
+  faCheckDouble,
   faDog, 
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons'
@@ -29,7 +30,7 @@ const App = () => {
     <NavigationContainer>
       <View>
         <StatusBar
-          backgroundColor={appColors.darker}
+          backgroundColor={appColors.dark}
         />
       </View>
       <Tab.Navigator 
@@ -38,15 +39,17 @@ const App = () => {
           inactiveTintColor: appColors.lightGray,
           showLabel: false,
           style: { 
-            backgroundColor: appColors.darker,
+            backgroundColor: appColors.dark,
             height: 52,
-            borderTopWidth: 0,
+            // borderTopWidth: 0,
+            borderTopWidth: 1,
+            borderTopColor: appColors.lightGray
           }
         }}
       >
-        <Tab.Screen name="Home" component={Todos} options={
+        <Tab.Screen name="Home" component={ListView} options={
           {tabBarIcon: ({color, size}) => (
-            <FontAwesomeIcon icon={faCheck} color={color} size={size}/>
+            <FontAwesomeIcon icon={faCheckDouble} color={color} size={size}/>
             )}
         } />
         <Tab.Screen name="Shibe API" component={ShibeApi} options={
