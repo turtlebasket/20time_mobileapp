@@ -5,8 +5,9 @@
 
  // Project
 import Profile from './screens/Profile';
-import ListView from './screens/ListView';
-import ShibeApi from './screens/ShibeApi';
+import ListViewV2 from './screens/ListView';
+import TodoEditor from './screens/TodoEditView';
+import ConceptDemo from './screens/ConceptDemo';
 import appColors from "./Colors";
 
 // External
@@ -22,6 +23,7 @@ import {
   faDog, 
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons'
+import ListView from './screens/ListView';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,12 +37,13 @@ const App = () => {
       </View>
       <Tab.Navigator 
         tabBarOptions={{
+          keyboardHidesTabBar: true,
           activeTintColor: appColors.green1,
           inactiveTintColor: appColors.lightGray,
           showLabel: false,
           style: { 
             backgroundColor: appColors.dark,
-            height: 52,
+            height: 50,
             // borderTopWidth: 0,
             borderTopWidth: 1,
             borderTopColor: appColors.lightGray
@@ -52,7 +55,7 @@ const App = () => {
             <FontAwesomeIcon icon={faCheckDouble} color={color} size={size}/>
             )}
         } />
-        <Tab.Screen name="Shibe API" component={ShibeApi} options={
+        <Tab.Screen name="Shibe API" component={ConceptDemo} options={
           {tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faDog} color={color} size={size}/>
           )}
