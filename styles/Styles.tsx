@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 
   pageText: {
     color: appColors.white,
-    fontSize: 16,
+    fontSize: 14,
     textAlign: 'left',
   },
 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
 
   pageTextGreenBold: {
     color: appColors.green1,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'left',
   },
@@ -137,6 +137,44 @@ const styles = StyleSheet.create({
 
   strikethrough: {
     textDecorationLine: 'line-through'
+  },
+
+  profilePictureLarge: {
+    width: 120,
+    height: 120,
+    borderRadius: 120/2,
+    borderWidth: 2,
+    borderColor: appColors.green1
+  },
+
+  profilePictureSmall: {
+    width: 40,
+    height: 40,
+    borderRadius: 40/2,
+    borderWidth: 2,
+    borderColor: appColors.green1
+  },
+
+  textBox: {
+    color: appColors.white,
+    fontSize: 18,
+    marginVertical: 4,
+    padding: 10,
+    textAlignVertical: 'top'
+  },
+
+  textBoxTitle: {
+    color: appColors.white,
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginVertical: 4,
+    paddingHorizontal: 12,
+  },
+
+  borderBox: {
+    borderRadius: 12,
+    borderColor: appColors.lightGray,
+    borderWidth: 1,
   }
 
 });
