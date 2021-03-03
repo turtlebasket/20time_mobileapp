@@ -44,7 +44,7 @@ interface TodoCardState {
  * The order of interfaces listed in Component<if1, if2> is ranked by PROPS, STATE. 
  * PAY ATTENTION TO THAT.
  * */
-export default class TodoCardV2 extends Component<TodoCardProps, TodoCardState> {
+export default class TodoCard extends Component<TodoCardProps, TodoCardState> {
 
   state={
   // complete: this.props.completeInitial,
@@ -65,7 +65,8 @@ export default class TodoCardV2 extends Component<TodoCardProps, TodoCardState> 
     onLongPress={this.props.dragBehavior}
     onPressOut={() => {this.setState({pressed: false})}}
     >
-    <View style={[styles.card, {height: 82}, this.props.selected ? {backgroundColor: appColors.darkSelected} : null]}>
+    <View style={[styles.card, {height: 70, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 8, justifyContent: 'center'}, 
+      this.props.selected ? {backgroundColor: appColors.darkSelected} : null]}>
       <View style={{flex: 1, flexDirection: 'row'}}>
       <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
         <TouchableWithoutFeedback
@@ -88,9 +89,9 @@ export default class TodoCardV2 extends Component<TodoCardProps, TodoCardState> 
         <Text 
           numberOfLines={1} 
           style={[
-          styles.pageTextLarge, this.state.complete ? styles.strikethrough : null,{width: 180}]}>{this.props.title}</Text>
+          styles.pageTextBold, this.state.complete ? styles.strikethrough : null,{width: 180}]}>{this.props.title}</Text>
         <Text numberOfLines={1}
-        style={[styles.pageText, {width: 170}, this.state.complete ? styles.strikethrough : null]}
+        style={[styles.pageText, {width: 170, color: appColors.lightGray}, this.state.complete ? styles.strikethrough : null]}
         >{this.props.description}</Text>
         </View>
 

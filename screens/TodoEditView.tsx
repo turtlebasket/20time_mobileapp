@@ -8,9 +8,11 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 
 import {toDisk, fromDisk} from '../data/UserData'
+import { NavigationProp } from '@react-navigation/native';
 
 interface TodoEditorProps {
   id: string;
+  navigator: any; // NavigationProp?
 }
 
 interface TodoEditorState {

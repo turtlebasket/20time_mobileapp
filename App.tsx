@@ -1,11 +1,10 @@
 /**
  * Main page for the app
- * 
  */
 
  // Project
 import Profile from './screens/Profile';
-import ListViewV2 from './screens/ListView';
+import ListViewV2 from './screens/TodoListView';
 import TodoEditor from './screens/TodoEditView';
 import ConceptDemo from './screens/ConceptDemo';
 import appColors from "./Colors";
@@ -23,7 +22,8 @@ import {
   faDog, 
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons'
-import ListView from './screens/ListView';
+import TodoListView from './screens/TodoListView';
+import Todo from './screens/Todo';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,7 +32,7 @@ const App = () => {
     <NavigationContainer>
       <View>
         <StatusBar
-          backgroundColor={appColors.dark}
+          backgroundColor={appColors.black}
         />
       </View>
       <Tab.Navigator 
@@ -50,7 +50,7 @@ const App = () => {
           }
         }}
       >
-        <Tab.Screen name="Home" component={ListView} options={
+        <Tab.Screen name="Todos" component={Todo} options={
           {tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faCheckDouble} color={color} size={size}/>
             )}
