@@ -74,6 +74,10 @@ class ConceptDemo extends Component {
       <ScrollView>
         <View style={styles.container}>
 
+          <View style={styles.cardInvis}>
+            <Text style={styles.pageTitleLargeGreen}>Concept Demo</Text>
+          </View>
+
           <View style={styles.card}>
             <Text style={styles.pageTitle}>getter/setter by GUID demo</Text>
             <Text style={styles.pageText}>{getByGuid(listOfItems, "67890").name}</Text>
@@ -82,6 +86,7 @@ class ConceptDemo extends Component {
               style={styles.textBox} 
               placeholder={"GUID"} 
               placeholderTextColor={appColors.lightGray}
+              selectionColor={appColors.green1}
               defaultValue={newItem.id}
               onChangeText={(text) => this.setState({newItem: {...newItem, id: text}})}
             />
@@ -89,6 +94,7 @@ class ConceptDemo extends Component {
               style={styles.textBox} 
               placeholder={"name"} 
               placeholderTextColor={appColors.lightGray}
+              selectionColor={appColors.green1}
               defaultValue={newItem.name}
               onChangeText={(text) => {
                 this.setState({newItem: {...newItem, name: text}});

@@ -6,25 +6,6 @@ import uuid from 'uuid';
 
 /* DATA STRUCTURE
 
-  users = [
-    {
-      id: "<guid>",
-      name: "",
-      email: "",
-      dob: "",
-      todos: [
-        {
-          id: "<guid>",
-          title: "",
-          description: ""
-        }
-      ],
-      connections: [
-        "<guid>",
-        "<guid>"
-      ]
-    }
-  ];
   */
 
 /* USER JSON MANAGEMENT
@@ -68,4 +49,8 @@ export async function toCloud() {
 }
 
 export async function fromCloud() {
+}
+
+export async function syncDiskWithCloud() {
+
 }
