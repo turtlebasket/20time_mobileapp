@@ -7,23 +7,36 @@ Made with React Native (TypeScript)
 ##  User Data Structure  
 
 
-```js
+```ts
+currentUser = "<current user guid"
 users = [
     {
-        id: "<guid>",
+        id: "<user guid>",
         name: "",
         email: "",
         dob: "",
-        todos: [
-        {
-            id: "<guid>",
-            title: "",
-            description: ""
-        }
+        todoLists: [
+        	{
+           	 id: "<todoList guid>",
+           	 title: "",
+          	  description: "",
+           	 todos: [
+            		{
+           				id: "<todo guid>" ,
+                    	title: "do this",
+                    	description: "123",
+        			},
+                	{
+                    	id: "<todo guid>",
+                    	title: "do another thing",
+                    	description: "blah"
+                	}
+            	]
+        	}
         ],
-        connections: [
-        "<guid>",
-        "<guid>"
+        connections: [ // friends
+        	"<guid>",
+        	"<guid>"
         ]
     }
 ];
