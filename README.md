@@ -4,6 +4,7 @@
 <h1>Social Todo Mobile App</h1>
 Made with React Native (TypeScript)
 </div>
+
 ##  User Data Structure  
 
 
