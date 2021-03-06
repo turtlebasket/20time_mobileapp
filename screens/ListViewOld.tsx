@@ -17,7 +17,7 @@ import {
 import styles from "../styles/Styles"
 import miscstyles from "../styles/MiscStyles"
 import TodoCard from '../components/TodoCardOld';
-import appColors from '../Colors';
+import appColors from '../styles/Colors';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 interface ListViewState {

@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   TouchableHighlight
 } from 'react-native';
-import { appColors } from '../Colors';
+import { appColors } from '../styles/Colors';
 import TouchableCardBase from '../components/TouchableCard';
 import styles from '../styles/Styles';
 // import appColors from "../Colors";

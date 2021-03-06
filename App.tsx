@@ -7,7 +7,7 @@ import Profile from './screens/Profile';
 import ListViewV2 from './screens/TodoListView';
 import TodoEditor from './screens/TodoEditView';
 import ConceptDemo from './screens/ConceptDemo';
-import appColors from "./Colors";
+import appColors from "./styles/Colors";
 
 // External
 import React, { Component } from 'react';
@@ -24,12 +24,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import TodoListView from './screens/TodoListView';
 import Todo from './screens/Todo';
+import appNavTheme from './styles/NavigationTheme';
 
 const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      theme={appNavTheme}
+    >
       <View>
         <StatusBar
           backgroundColor={appColors.black}
@@ -44,9 +47,10 @@ const App = () => {
           style: { 
             backgroundColor: appColors.dark,
             height: 50,
-            // borderTopWidth: 0,
-            borderTopWidth: 1,
+            borderTopWidth: 0,
+            // borderTopWidth: 1,
             borderTopColor: appColors.lightGray
+            // borderTopColor: appColors.green1
           }
         }}
       >

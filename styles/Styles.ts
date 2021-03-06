@@ -1,5 +1,12 @@
 import {StyleSheet} from 'react-native'
-import { appColors }  from "../Colors"
+import { appColors }  from "./Colors"
+
+const fontSizes = {
+  small: 14,
+  normal: 16,
+  subtitle: 18,
+  title: 22
+}
 
 const styles = StyleSheet.create({
 
@@ -18,10 +25,9 @@ const styles = StyleSheet.create({
     backgroundColor: appColors.dark,
     paddingHorizontal: 24,
     paddingVertical: 16,
-    marginHorizontal: 12,
+    marginHorizontal: 8,
     marginBottom: 12,
-    borderRadius: 18,
-    width: '96%',
+    borderRadius: 8,
   },
 
   cardGreen: {
@@ -29,10 +35,9 @@ const styles = StyleSheet.create({
     backgroundColor: appColors.green1,
     paddingHorizontal: 24,
     paddingVertical: 16,
-    marginHorizontal: 12,
+    marginHorizontal: 8,
     marginBottom: 12,
     borderRadius: 18,
-    width: '96%'
   },
   
   cardInvis: {
@@ -40,10 +45,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     paddingVertical: 16,
-    marginHorizontal: 12,
+    marginHorizontal: 8,
     marginBottom: 12,
     borderRadius: 18,
-    width: '96%'
+    // width: '96%'
   },
 
   cardInvisCompact: {
@@ -51,10 +56,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     paddingVertical: 0,
-    marginHorizontal: 12,
+    marginHorizontal: 8,
     marginBottom: 0,
     borderRadius: 18,
-    width: '96%',
+    // width: '96%',
     justifyContent: 'center',
   },
 
@@ -63,7 +68,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: appColors.white,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: fontSizes.subtitle,
   },
 
   pageTitleLarge: {
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: appColors.white,
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: fontSizes.title,
   },
 
   pageTitleLargeGreen: {
@@ -80,48 +85,32 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: appColors.green1,
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: fontSizes.title,
   },
 
   pageTitleGreen: {
     textAlign: "left",
     color: appColors.green1,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: fontSizes.subtitle,
   },
 
   pageText: {
     color: appColors.white,
-    fontSize: 16,
+    fontSize: fontSizes.small,
     textAlign: 'left',
   },
 
   pageTextBold: {
     color: appColors.white,
-    fontSize: 16,
+    fontSize: fontSizes.normal,
     fontWeight: 'bold',
     textAlign: 'left',
   },
 
-  pageTextLarge: {
-    fontFamily: "Nunito",
-    textAlign: "left",
-    color: appColors.white,
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-
-  pageTextLargeGreen: {
-    fontFamily: "Nunito",
-    textAlign: "left",
-    color: appColors.green1,
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-
   pageTextGreenBold: {
     color: appColors.green1,
-    fontSize: 14,
+    fontSize: fontSizes.small,
     fontWeight: 'bold',
     textAlign: 'left',
   },
@@ -142,7 +131,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     margin: 8,
-    fontSize: 16 
+    fontSize: fontSizes.subtitle
   },
 
   ctrlBtn: {
@@ -176,15 +165,15 @@ const styles = StyleSheet.create({
 
   textBox: {
     color: appColors.white,
-    fontSize: 18,
+    fontSize: fontSizes.subtitle,
     marginVertical: 4,
     padding: 10,
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
   },
 
   textBoxTitle: {
     color: appColors.white,
-    fontSize: 26,
+    fontSize: fontSizes.title,
     fontWeight: 'bold',
     marginVertical: 4,
     paddingHorizontal: 12,
@@ -202,9 +191,11 @@ const styles = StyleSheet.create({
   },
 
   header: {
+    flex: 1,
+    flexDirection: 'row',
     backgroundColor: 'transparent',
     height: 60,
-    flex: 1,
+    maxHeight: 60,
     paddingHorizontal: 8,
     // paddingVertical: 0,
     marginHorizontal: 10,

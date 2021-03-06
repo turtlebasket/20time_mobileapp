@@ -2,7 +2,7 @@
  */
 
 import styles from '../styles/Styles'
-import appColors from '../Colors'
+import appColors from '../styles/Colors'
 
 import { 
   TouchableHighlight, 
@@ -14,16 +14,9 @@ import React, { Component } from 'react'
 import { View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { 
-  faBorderNone, 
-  faCheck, 
   faCheckCircle, 
-  faCheckSquare, 
   faCircle, 
-  faEdit, 
-  faGripLines, 
   faPencilAlt, 
-  faSquare, 
-  faUserEdit 
 } from '@fortawesome/free-solid-svg-icons';
 
 interface TodoCardProps {
@@ -65,7 +58,7 @@ export default class TodoCard extends Component<TodoCardProps, TodoCardState> {
     onLongPress={this.props.dragBehavior}
     onPressOut={() => {this.setState({pressed: false})}}
     >
-    <View style={[styles.card, {height: 70, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 8, justifyContent: 'center'}, 
+    <View style={[styles.card, {height: 70, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
       this.props.selected ? {backgroundColor: appColors.darkSelected} : null]}>
       <View style={{flex: 1, flexDirection: 'row'}}>
       <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
@@ -85,15 +78,16 @@ export default class TodoCard extends Component<TodoCardProps, TodoCardState> {
         </TouchableWithoutFeedback>
       </View>
 
-        <View>
-        <Text 
-          numberOfLines={1} 
-          style={[
-          styles.pageTextBold, this.state.complete ? styles.strikethrough : null,{width: 180}]}>{this.props.title}</Text>
-        <Text numberOfLines={1}
-        style={[styles.pageText, {width: 170, color: appColors.lightGray}, this.state.complete ? styles.strikethrough : null]}
-        >{this.props.description}</Text>
-        </View>
+      <View style={{justifyContent: 'center'}}>
+      <Text 
+        numberOfLines={1} 
+        style={[
+        styles.pageTextBold, this.state.complete ? styles.strikethrough : null,
+        {width: 180}]}>{this.props.title}</Text>
+      <Text numberOfLines={1}
+      style={[styles.pageText, {width: 170, color: appColors.lighterGray}, this.state.complete ? styles.strikethrough : null]}
+      >{this.props.description}</Text>
+      </View>
 
       <View 
       style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>

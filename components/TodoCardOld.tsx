@@ -2,7 +2,7 @@
  */
 
 import styles from '../styles/Styles'
-import appColors from '../Colors'
+import appColors from '../styles/Colors'
 
 import { TouchableHighlight, Text, TouchableWithoutFeedback, GestureResponderHandlers } from 'react-native'
 import React, { Component } from 'react'

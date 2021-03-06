@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   View,
   Text,
-  Button,
   TouchableNativeFeedback,
   Image,
   FlatList,
@@ -12,16 +11,19 @@ import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flat
 import styles from "../styles/Styles"
 import miscstyles from "../styles/MiscStyles"
 import TodoCard from '../components/TodoCard';
-import appColors from '../Colors';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { useCallback } from 'react';
-import { createStackNavigator } from '@react-navigation/stack'
-import { NavigationContainer } from '@react-navigation/native'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import appColors from '../styles/Colors';
+import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { faArrowLeft, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import IconButtonCircle from '../components/IconButtonCircle';
 import IconButtonTransparent from '../components/IconButtonTransparent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getTodoList, getTodoLists } from '../data/UserData';
+
+interface ListViewProps {
+  id: string;
+  navigation: any;
+  // navigation: NavigationProp<any,any>
+}
 
 interface ListViewState {
   todoName: string;
@@ -30,29 +32,28 @@ interface ListViewState {
   draggingIndex: number;
 }
 
-export default class TodoListView extends Component<{}, ListViewState> {
+export class TodoListView extends Component<ListViewProps, ListViewState> {
 
   state = {
     dragging: false,
     draggingIndex: -1,
-    todoName: "Chores",
-    todos: [
-      {id: "abc", title: "Push out the trash", description: "Very difficult, be careful"},
-      {id: "def", title: "Do the dishes", description: "Clean"},
-      {id: "ghi", title: "Load the dishwasher", description: "Cleansadfjlaskdfjlsakjdfal"},
-      {id: "123", title: "Fold the laundry", description: "Cleansadfjlaskdfjlsakjdfal"},
-      {id: "456", title: "Do the dishes", description: "Cleansadfjlaskdfjlsakjdfal"},
-      {id: "asdf", title: "Get Help", description: "Cleansadfjlaskdfjlsakjdfal"},
-      {id: "jwoef", title: "Do the dishes1", description: "Cleansadfjlaskdfjlsakjdfal"},
-      {id: "0239ri", title: "Do the dishes2", description: "Cleansadfjlaskdfjlsakjdfal"},
-      {id: "jl23j", title: "Do the dishes3", description: "Cleansadfjlaskdfjlsakjdfal"},
-      {id: "j23ori", title: "Do the dishes4", description: "Cleansadfjlaskdfjlsakjdfal"},
-      {id: "2j3oif", title: "Do the dishes5", description: "Cleansadfjlaskdfjlsakjdfal"},
-    ]
+    newTodo: {
+      id: "",
+      title: "",
+      description: ""
+    },
+    todoName: "",
+    todos: []
   };
 
   constructor(props: any) {
     super(props);
+  }
+
+  componentDidMount() {
+    getTodoList(this.props.id).then((val: any) => {
+      this.setState({todoName: val.title, todos: val.todos});
+    })
   }
 
   render() {
@@ -78,7 +79,7 @@ export default class TodoListView extends Component<{}, ListViewState> {
       </View>
     );
 
-
+    const { navigation } = this.props;
 
     return (
       <SafeAreaView style={styles.container}>
@@ -89,7 +90,9 @@ export default class TodoListView extends Component<{}, ListViewState> {
           <Text style={styles.pageTitleLargeGreen}>{this.state.todoName}</Text>
           {/* Snap all of these to the right */}
           <View style={{marginLeft: 'auto'}}> 
-            <IconButtonCircle icon={faPlus} />
+            <IconButtonCircle icon={faPlus} onPress={() => {
+              navigation.navigate("Edit")
+            }} />
           </View>
         </View>
 
@@ -108,4 +111,9 @@ export default class TodoListView extends Component<{}, ListViewState> {
     );
 
   }
+}
+
+export default function TodoListViewWrapped(props: any) {
+  const navigation = useNavigation();
+  return <TodoListView {...props} navigation={navigation}/>;
 }
