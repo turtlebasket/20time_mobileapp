@@ -12,14 +12,22 @@ import {
 import miscstyles from '../styles/MiscStyles';
 import '../data/UserData';
 import { ScrollView } from 'react-native';
-import { getByGuid, setByGuid } from '../data/UserData';
+import { getCurrentUserId, getByGuid, getTodoLists, getAllUsers, setByGuid, setTodos, setTodo, setTodoItem, setTodoList, jsonDiffKeys } from '../data/UserData';
 import { TextInput } from 'react-native-gesture-handler';
-import appColors from '../Colors';
+import appColors from '../styles/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { v4 as uuidv4 } from 'uuid';
+import { createIconSetFromFontello } from 'react-native-vector-icons';
+import { faPrint } from '@fortawesome/free-solid-svg-icons';
 
 class ConceptDemo extends Component {
   state = {
     imageUrl: "",
     newItem: {
+      id: "",
+      name: ""
+    },
+    newUser: {
       id: "",
       name: ""
     },
@@ -69,13 +77,84 @@ class ConceptDemo extends Component {
   }
 
   render() {
-    const {imageUrl, listOfItems, newItem} = this.state;
+    const {imageUrl, listOfItems, newItem, newUser} = this.state;
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps={true}>
         <View style={styles.container}>
 
           <View style={styles.cardInvis}>
             <Text style={styles.pageTitleLargeGreen}>Concept Demo</Text>
+          </View>
+
+          <View style={[styles.card, {width: '96%'}]}>
+            <Text style={styles.pageTitle}>CREATE/EDIT USER</Text>
+            <TextInput 
+              style={styles.textBox} 
+              placeholder={"Name"} 
+              placeholderTextColor={appColors.lightGray}
+              selectionColor={appColors.green1}
+              defaultValue={newItem.id}
+              onChangeText={(text) => this.setState({newUser: {...newUser, name: text}})}
+            />
+            <TouchableNativeFeedback
+              onPress={() => {
+                // var newUUID = uuidv4()
+
+                var newUUID = '1234'
+                var newVal: any = []
+                AsyncStorage.getItem('users').then((val: string | null) => {
+                  const valObj: any = val != null ? JSON.parse(val) : [];
+                  newVal = setByGuid(
+                    valObj, 
+                    {
+                      id: newUUID, 
+                      name: this.state.newUser.name,
+                    })
+                  console.log(`NEWVAL ${JSON.stringify(newVal)}`)
+                  AsyncStorage.setItem('users', JSON.stringify(newVal))
+                  AsyncStorage.setItem('currentUser', newUUID)
+                })
+                
+              }}
+            ><Text style={styles.customButton}>Create User</Text></TouchableNativeFeedback>
+          </View>
+
+          <View style={[styles.card, {width: '96%'}]}>
+            <Text style={styles.pageTitle}>Get/Set Local Data</Text>
+            <TouchableNativeFeedback
+              onPress={() => {
+                // remove all users
+                AsyncStorage.removeItem('users')
+              }}
+            ><Text style={styles.customButton}>Clear Users</Text></TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => {
+                // get current user
+                AsyncStorage.getItem('currentUser').then((val) => {
+                  console.log(`CURRENT USER --- ${val}`)
+                })
+                // get all users
+                AsyncStorage.getItem('users').then((val) => {
+                  console.log(`USERS --- ${val}`)
+                })
+              }}
+            ><Text style={styles.customButton}>List Users</Text></TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => {
+                setTodoList({id: 'lasdkfjdsfdf', title: 'Chores', description: 'test'})
+              }}
+            ><Text style={styles.customButton}>Create/Set Todo List</Text></TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => {
+                setTodoItem('lasdkfjdsfdf', {id: 'lasdkfjasldf2', title: 'Do another thing'}).catch((e: any) => {console.log(e)})
+              }}
+            ><Text style={styles.customButton}>Create/Set Todo Item</Text></TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => {
+                jsonDiffKeys({id: "12345", title: "thingy1"}, {id: "12345", title: "thingy2"})
+                // getTodoLists().then(val => console.log(val))
+              }}
+            ><Text style={styles.customButton}>getTodoLists() Demo</Text></TouchableNativeFeedback>
           </View>
 
           <View style={styles.card}>
@@ -97,8 +176,8 @@ class ConceptDemo extends Component {
               selectionColor={appColors.green1}
               defaultValue={newItem.name}
               onChangeText={(text) => {
-                this.setState({newItem: {...newItem, name: text}});
-                // console.log(JSON.stringify(this.state))
+                this.setState({newItem: {...newItem}, name: text});
+                console.log(JSON.stringify(this.state))
               }}
             />
             <TouchableNativeFeedback
