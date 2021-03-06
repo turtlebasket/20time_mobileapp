@@ -8,8 +8,8 @@ Made with React Native (TypeScript)
 
 
 ```ts
-currentUser = "<current user guid"
-users = [
+currentUser: "<current user guid",
+users: [
     {
         id: "<user guid>",
         name: "",
@@ -17,19 +17,22 @@ users = [
         dob: "",
         todoLists: [
         	{
-           	 id: "<todoList guid>",
-           	 title: "",
-          	  description: "",
-           	 todos: [
+           	 	id: "<todoList guid>",
+           		title: "Errands",
+          	  	description: "",
+                public: false,
+          	 	todoItems: [
             		{
            				id: "<todo guid>" ,
-                    	title: "do this",
+                    	title: "todo example",
                     	description: "123",
+                        dueDate: null,
         			},
                 	{
                     	id: "<todo guid>",
-                    	title: "do another thing",
-                    	description: "blah"
+                    	title: "another todo example",
+                    	description: "blah",
+                        dueDate: "<ISO time>"
                 	}
             	]
         	}
