@@ -21,7 +21,7 @@ users: [
            	 	id: "<todoList guid>",
            		title: "Errands",
           	  	description: "",
-                public: false,
+          	  	public: false,
           	 	todoItems: [
             		{
            				id: "<todo guid>" ,
