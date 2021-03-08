@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useScrollToTop } from '@react-navigation/native';
 import { Value } from 'react-native-reanimated';
 import uuid from 'uuid';
 
@@ -7,19 +8,28 @@ import uuid from 'uuid';
  * ---------------------
  */
 
-// returns every stored (logged-in) user object, tasks, friends and all
+/**
+ * Get all users, (both current and everyone else)
+ * @return users list object
+ */
 export async function getAllUsers() {
   const users = await AsyncStorage.getItem('users');
   return users != null ? JSON.parse(users) : null;
 }
 
-// returns CURRENT user ID
+/**
+ * Get current user ID
+ * @return ID for currentUser
+ */
 export async function getCurrentUserId() { 
   const userId = await AsyncStorage.getItem('currentUser');
   return userId;
 }
 
-// returns actual user object for CURRENT user
+/**
+ * Get current user object
+ * @return user object for CURRENT user
+ */
 export async function getCurrentUser() { 
   const userId = await AsyncStorage.getItem('currentUser');
   const usersStr = await AsyncStorage.getItem('users');
@@ -29,26 +39,46 @@ export async function getCurrentUser() {
   return currentUser;
 }
 
-// sets ANY user
+/**
+ * Sets current user to given ID.
+ * @param userId new currentUser ID
+ */
+export async function setCurrentUserById(userId: string) {
+  await AsyncStorage.setItem('currentUser', userId);
+}
+
+/**
+ * Set ANY user object in storage
+ * @param user User object
+ */
 export async function setUser(user: any) {
   var users = await getAllUsers();
   setByGuid(users, user)
   await AsyncStorage.setItem('users', JSON.stringify(users));
 }
 
-// returns todo lists of CURRENT user
+/**
+ * Gets all Todo Lists of current user
+ * @return Every todo list of current user
+ */
 export async function getTodoLists() { 
   const user = await getCurrentUser();
   return user.todoLists ? user.todoLists : [];
 }
 
-// returns one todo list of CURRENT user specified by ID
+/**
+ * Get Todo List of current user
+ * @return one todo list of CURRENT user specified by ID
+ */ 
 export async function getTodoList(id: string) { 
   const user = await getCurrentUser();
   return getByGuid(user.todoLists, id);
 }
 
-// CURRENT USER ONLY
+/**
+ * Set TodoList of current user
+ * @param todoList TodoList object 
+ */
 export async function setTodoList(todoList: any) {
   const user = await getCurrentUser();
   var targetTodoListOld = {};
@@ -57,7 +87,12 @@ export async function setTodoList(todoList: any) {
   setUser(user);
 }
 
-// add OR unshift todo to CURRENT user's todolist by todolist ID
+/**
+ * Add OR unshift todo item to CURRENT user's todolist by todolist ID
+ * @param listId ID of target todo list
+ * @param todo todo object to be inserted/overwritten
+ * @param end insert at end? (else beginning)
+ */
 export async function setTodoItem(listId: string, todo: any, end:boolean=false) {
   var user = await getCurrentUser();
   const todoList = getByGuid(user.todoLists, listId);
