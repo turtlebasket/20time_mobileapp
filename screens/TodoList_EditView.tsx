@@ -7,35 +7,36 @@ import { TextInput } from 'react-native-gesture-handler'
 import React, { Component } from 'react';
 import { View } from 'react-native';
 
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NavigationProp, useLinkBuilder, useNavigation, useRoute } from '@react-navigation/native';
 import IconButtonCircle from '../components/IconButtonCircle';
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import IconButtonTransparent from '../components/IconButtonTransparent';
+import uuid from 'uuid';
+import { getTodoList } from '../data/UserData';
 
-interface TodoEditorProps {
-  id: string;
+interface TodoListEditorProps {
+  id: string | null;
   navigation: any;
   // onSave?: any;
 }
 
-interface TodoEditorState {
+interface TodoListEditorState {
+  id: string
   title: string;
   description: string;
 }
 
-export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
+export class TodoListEditView extends Component<TodoListEditorProps, TodoListEditorState> {
 
   constructor(props: any) {
     super(props);
-    this.state={
-      title: "",
-      description: ""
-    };
   }
 
   componentDidMount() {
-    var currentUser: ""
-    AsyncStorage.getItem(this.props.id).then((value) => {
+    this.setState({id: this.props.id === null ? uuid.v4() as string : this.props.id,});
+    getTodoList(this.state.id).then((val) => {
+      this.setState({title: val.title, description: val.description})
     })
   }
 
@@ -47,18 +48,21 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
       <View style={styles.container}>
 
         <View style={[styles.header, {}]}>
+          <IconButtonTransparent icon={faArrowLeft} onPress={() => {
+            navigation.navigate('TodoItems')
+          }} />
           <TextInput // title
-            style={[styles.textBoxTitle, {minWidth: 70}]}
+            style={[styles.textBoxTitle, {minWidth: 90}]}
             multiline={false}
             numberOfLines={1}
-            placeholder={"Title..."}
+            placeholder={"Title"}
             placeholderTextColor={appColors.lightGray}
             selectionColor={appColors.green1}
             textAlign={'left'}
           />
           <View style={{marginLeft: 'auto'}}>
             <IconButtonCircle icon={faSave} onPress={() => {
-              navigation.navigate("Todos")
+              navigation.navigate("TodoItems")
             }}/>
           </View>
         </View>
@@ -66,7 +70,7 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
         <TextInput // description
           style={[styles.textBox, {minHeight: 120, maxHeight: 120, width: '94%'}]}
           multiline={true}
-          placeholder={"Description..."}
+          placeholder={"Description"}
           placeholderTextColor={appColors.lightGray}
           selectionColor={appColors.green1}
           textAlign={'left'}
@@ -76,7 +80,8 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
   }
 }
 
-export default function TodoEditViewWrapped(props: any) {
+export default function TodoListEditViewWrapped(props: any) {
   const navigation = useNavigation();
-  return <TodoEditView {...props} navigation={navigation}/>;
+  const route = useRoute();
+  return <TodoListEditView {...props} navigation={navigation}/>;
 }

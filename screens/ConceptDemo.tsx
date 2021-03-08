@@ -12,7 +12,7 @@ import {
 import miscstyles from '../styles/MiscStyles';
 import '../data/UserData';
 import { ScrollView } from 'react-native';
-import { getCurrentUserId, getByGuid, getTodoLists, getAllUsers, setByGuid, setTodos, setTodo, setTodoItem, setTodoList, jsonDiffKeys } from '../data/UserData';
+import { getCurrentUserId, getByGuid, getTodoLists, getAllUsers, setByGuid, setTodoItem, setTodoList, jsonDiffKeys } from '../data/UserData';
 import { TextInput } from 'react-native-gesture-handler';
 import appColors from '../styles/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -151,8 +151,8 @@ class ConceptDemo extends Component {
             ><Text style={styles.customButton}>Create/Set Todo Item</Text></TouchableNativeFeedback>
             <TouchableNativeFeedback
               onPress={() => {
-                jsonDiffKeys({id: "12345", title: "thingy1"}, {id: "12345", title: "thingy2"})
-                // getTodoLists().then(val => console.log(val))
+                // jsonDiffKeys({id: "12345", title: "thingy1"}, {id: "12345", title: "thingy2"})
+                getTodoLists().then(val => console.log(val))
               }}
             ><Text style={styles.customButton}>getTodoLists() Demo</Text></TouchableNativeFeedback>
           </View>

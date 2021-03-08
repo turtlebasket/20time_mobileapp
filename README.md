@@ -18,7 +18,7 @@ users: [
         dob: "",
         todoLists: [
         	{
-           	 	id: "<todoList guid>",
+				id: "<todoList guid>",
            		title: "Errands",
           	  	description: "",
           	  	public: false,

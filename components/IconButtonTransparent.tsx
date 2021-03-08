@@ -5,10 +5,10 @@ import { TouchableNativeFeedback, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-export default function IconButtonCircle(props: any) {
+export default function IconButtonTransparent(props: any) {
   var len = 36; 
   return (
-  <TouchableNativeFeedback>
+  <TouchableNativeFeedback onPress={props.onPress}>
     <View style={{
     height: len,
     width: len,

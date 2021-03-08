@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist'
 import styles from "../styles/Styles"
-import miscstyles from "../styles/MiscStyles"
-import TodoCard from '../components/TodoCard';
+import TodoItemCard from '../components/TodoItemCard';
 import appColors from '../styles/Colors';
 import { NavigationProp, useNavigation } from '@react-navigation/native'
 import { faArrowLeft, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
@@ -28,15 +27,11 @@ interface ListViewProps {
 interface ListViewState {
   todoName: string;
   todos: any[]; // accept list of any type
-  dragging: boolean;
-  draggingIndex: number;
 }
 
 export class TodoListView extends Component<ListViewProps, ListViewState> {
 
   state = {
-    dragging: false,
-    draggingIndex: -1,
     newTodo: {
       id: "",
       title: "",
@@ -70,7 +65,7 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
     // const renderItem = ({ item, index, drag, isActive }: RenderItemParams<TodoItem>) => (
     const renderItem = ({ item, index, drag, isActive }: RenderItemParams<TodoItem>) => (
       <View>
-        <TodoCard
+        <TodoItemCard
           title={item.title} 
           description={item.description} 
           selected={isActive}
@@ -86,12 +81,14 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
 
         <View style={[styles.header, 
         {maxHeight: 64, flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}]}>
-          <IconButtonTransparent icon={faArrowLeft} />
+          <IconButtonTransparent icon={faArrowLeft} onPress={() => {
+            navigation.navigate("TodoLists")
+          }} />
           <Text style={styles.pageTitleLargeGreen}>{this.state.todoName}</Text>
           {/* Snap all of these to the right */}
           <View style={{marginLeft: 'auto'}}> 
             <IconButtonCircle icon={faPlus} onPress={() => {
-              navigation.navigate("Edit")
+              navigation.navigate("EditTodoItem", {id: '123'})
             }} />
           </View>
         </View>
