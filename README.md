@@ -24,16 +24,18 @@ users: [
           	  	public: false,
           	 	todoItems: [
             		{
-           				id: "<todo guid>" ,
+                        id: "<todo guid>" ,
                     	title: "todo example",
                     	description: "123",
                         dueDate: null,
-        			},
+                        complete: false
+                    },
                 	{
                     	id: "<todo guid>",
                     	title: "another todo example",
                     	description: "blah",
-                        dueDate: "<ISO time>"
+                        dueDate: "<ISO time>",
+                        complete: true
                 	}
             	]
         	}
