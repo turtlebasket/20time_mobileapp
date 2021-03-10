@@ -17,7 +17,7 @@ import { faArrowLeft, faPlus, faPlusCircle, faRoute } from '@fortawesome/free-so
 import IconButtonCircle from '../components/IconButtonCircle';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getTodoList, getTodoLists } from '../data/UserData';
+import { getTodoList, getTodoLists, setTodoLists } from '../data/UserData';
 import TodoListCard from '../components/TodoListCard';
 
 interface AllViewProps {
@@ -31,22 +31,33 @@ interface AllViewState {
 }
 
 class TodoAllView extends Component<AllViewProps, AllViewState> {
+
   constructor(props: any) {
     super(props);
+    this.state={
+      todoLists: []
+    }
   }
 
-  state={
-    todoLists: [],
-  }
+  wantsToRefresh = this.props.navigation.addListener('blur', (payload: any) => {
+    this.refreshFromStorage();
+    console.log(`NAVIGATION BACK PAYLOAD ${payload}`)
+  })
+
 
   componentDidMount() {
+    this.refreshFromStorage();
+  }
+
+  refreshFromStorage() {
     getTodoLists().then((val) => {
-      console.log(val)
-      // this.setState({todoLists: val});
+      this.setState({todoLists: val})
     })
   }
 
   render() {
+
+    console.log("render loop")
 
     const { navigation } = this.props;
     const { todoLists } = this.state;
@@ -62,6 +73,8 @@ class TodoAllView extends Component<AllViewProps, AllViewState> {
     const renderItem = ({item, index, drag, isActive}: RenderItemParams<TodoList>) => (
       <View>
         <TodoListCard 
+          navigation={navigation}
+          id={item.id}
           title={item.title} 
           description={item.description} 
           public={item.public}
@@ -80,7 +93,7 @@ class TodoAllView extends Component<AllViewProps, AllViewState> {
           {/* Snap all of these to the right */}
           <View style={{marginLeft: 'auto'}}> 
             <IconButtonCircle icon={faPlus} onPress={() => {
-              navigation.navigate("EditTodoItem")
+              navigation.navigate("EditTodoList", {id: null})
             }} />
           </View>
         </View>
@@ -93,7 +106,10 @@ class TodoAllView extends Component<AllViewProps, AllViewState> {
           data={todoLists}
           renderItem={renderItem}
           keyExtractor={(item, index) => `draggable-item-${item.id}`}
-          onDragEnd={({ data }) => this.setState({todoLists: data})}
+          onDragEnd={({ data }) => {
+            this.setState({todoLists: data})
+            setTodoLists(data)
+          }}
         />
 
       </SafeAreaView>

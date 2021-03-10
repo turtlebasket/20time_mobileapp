@@ -11,7 +11,7 @@ import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flat
 import styles from "../styles/Styles"
 import TodoItemCard from '../components/TodoItemCard';
 import appColors from '../styles/Colors';
-import { NavigationProp, useNavigation } from '@react-navigation/native'
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native'
 import { faArrowLeft, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import IconButtonCircle from '../components/IconButtonCircle';
 import IconButtonTransparent from '../components/IconButtonTransparent';
@@ -26,7 +26,7 @@ interface ListViewProps {
 
 interface ListViewState {
   todoName: string;
-  todos: any[]; // accept list of any type
+  todoItems: any[]; // accept list of any type
 }
 
 export class TodoListView extends Component<ListViewProps, ListViewState> {
@@ -38,7 +38,7 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
       description: ""
     },
     todoName: "",
-    todos: []
+    todoItems: []
   };
 
   constructor(props: any) {
@@ -46,14 +46,16 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
   }
 
   componentDidMount() {
+    console.log(this.props.id)
     getTodoList(this.props.id).then((val: any) => {
-      this.setState({todoName: val.title, todos: val.todos});
+      // console.log(val)
+      this.setState({todoName: val.title, todoItems: val.todoItems});
     })
   }
 
   render() {
 
-    const { todos } = this.state;
+    const { todoItems } = this.state;
 
     type TodoItem = {
       id: string;
@@ -66,6 +68,7 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
     const renderItem = ({ item, index, drag, isActive }: RenderItemParams<TodoItem>) => (
       <View>
         <TodoItemCard
+          id={item.id}
           title={item.title} 
           description={item.description} 
           selected={isActive}
@@ -98,10 +101,10 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
             width: "100%",
             minWidth: "100%",
           }}
-          data={todos}
+          data={todoItems}
           renderItem={renderItem}
           keyExtractor={(item, index) => `draggable-item-${item.id}`}
-          onDragEnd={({ data }) => this.setState({todos: data})}
+          onDragEnd={({ data }) => this.setState({todoItems: data})}
         />
 
       </SafeAreaView>
@@ -112,5 +115,6 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
 
 export default function TodoListViewWrapped(props: any) {
   const navigation = useNavigation();
-  return <TodoListView {...props} navigation={navigation}/>;
+  const route = useRoute();
+  return <TodoListView {...props} id={route.params.id} navigation={navigation}/>;
 }

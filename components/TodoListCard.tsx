@@ -16,10 +16,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { 
   faCheckCircle, 
   faCircle, 
+  faEye, 
+  faEyeSlash, 
   faPencilAlt, 
 } from '@fortawesome/free-solid-svg-icons';
 
 interface TodoCardProps {
+  navigation: any;
+  id: string;
   title: string;
   description: string;
   public: boolean;
@@ -46,6 +50,7 @@ export default class TodoListCard extends Component<TodoCardProps, TodoCardState
   }
 
   render() {
+    const { navigation } = this.props
 
   return (
   <TouchableWithoutFeedback 
@@ -53,16 +58,19 @@ export default class TodoListCard extends Component<TodoCardProps, TodoCardState
   // onLongPress={() => {this.setState({pressed: true})}}
   onLongPress={this.props.dragBehavior}
   onPressOut={() => {this.setState({pressed: false})}}
+  onPress={() => {
+    navigation.navigate("TodoItems", {id: this.props.id })
+  }}
   >
   <View style={[styles.card, {height: 70, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
     this.props.selected ? {backgroundColor: appColors.darkSelected} : null]}>
     <View style={{flex: 1, flexDirection: 'row'}}>
       <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
         <FontAwesomeIcon 
-          icon={this.props.public ? faCheckCircle : faCircle} 
-          size={33}
+          icon={this.props.public ? faEye : faEyeSlash} 
+          size={28}
           style={{
-          color: appColors.lighterGray,
+          color: this.props.public ? appColors.lighterGray : appColors.lightGray,
           marginRight: 20,
           }}
         />

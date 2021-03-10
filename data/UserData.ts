@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useScrollToTop } from '@react-navigation/native';
 import { Value } from 'react-native-reanimated';
-import uuid from 'uuid';
 
 /* ---------------------
  * LOCAL STORAGE HELPERS 
@@ -76,13 +75,23 @@ export async function getTodoList(id: string) {
 }
 
 /**
+ * Set todoLists of a user. USE WITH CAUTION, THIS OVERWRITES EVERYTHING!
+ * @param todoLists new todoLists object
+ */
+export async function setTodoLists(todoLists: any[]) {
+  const user = await getCurrentUser();
+  user.todoLists = todoLists;
+  setUser(user) 
+}
+
+/**
  * Set TodoList of current user
  * @param todoList TodoList object 
  */
 export async function setTodoList(todoList: any) {
   const user = await getCurrentUser();
-  var targetTodoListOld = {};
-  getTodoLists().then(val => {targetTodoListOld = getByGuid(user.todoLists, todoList.id)})
+  // var targetTodoListOld = {};
+  // getTodoLists().then(val => {targetTodoListOld = getByGuid(user.todoLists, todoList.id)})
   user.todoLists = setByGuid(user.todoLists, todoList)
   setUser(user);
 }
@@ -159,4 +168,15 @@ export function jsonDiffKeys(obj1: any, obj2: any) {
     }
   }
   return diffKeys
+}
+
+/**
+ * Generate RFC-compliant UUID based on time. ID's generated more than 1ms apart are 100% unique.
+ * Ripped shamelessly from https://stackoverflow.com/a/44078785/9096067
+ * @return generated UUID
+ */
+export function genUUIDTime() {
+  let u = Date.now().toString(16) + Math.random().toString(16) + '0'.repeat(16);
+  let guid = [u.substr(0,8), u.substr(8,4), '4000-8' + u.substr(13,3), u.substr(16,12)].join('-');
+  return guid;
 }

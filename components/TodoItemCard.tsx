@@ -20,6 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 interface TodoItemCardProps {
+  id: string;
   title: string;
   description: string;
   // panHandlers: GestureResponderHandlers;

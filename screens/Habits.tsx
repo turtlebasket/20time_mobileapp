@@ -5,7 +5,7 @@ import styles from '../styles/Styles';
 import HabitListViewWrapper from './HabitListView';
 import TodoAllView from './TodoList_ListView';
 import TodoEditViewWrapped from './TodoItem_EditView';
-import TodoListViewWrapped from './Todo_ListView';
+import TodoListViewWrapped from './TodoItem_ListView';
 
 const StackNav = createStackNavigator();
 
