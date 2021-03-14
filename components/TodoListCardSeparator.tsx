@@ -1,0 +1,16 @@
+import React from 'react';
+import { View } from "react-native";
+import appColors from "../styles/Colors";
+
+export default function TodoListCardSeparator() {
+  return (
+    <View
+      style={{
+        width: "94%",
+        height: 1,
+        backgroundColor: appColors.lightGray,
+        alignSelf: 'center'
+      }}
+    />
+  );
+}

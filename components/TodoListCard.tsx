@@ -8,7 +8,8 @@ import {
   TouchableHighlight, 
   Text, 
   TouchableWithoutFeedback, 
-  GestureResponderHandlers 
+  GestureResponderHandlers, 
+  TouchableNativeFeedback
 } from 'react-native'
 import React, { Component } from 'react'
 import { View } from 'react-native';
@@ -53,7 +54,7 @@ export default class TodoListCard extends Component<TodoCardProps, TodoCardState
     const { navigation } = this.props
 
   return (
-  <TouchableWithoutFeedback 
+  <TouchableNativeFeedback 
   delayLongPress={240}
   // onLongPress={() => {this.setState({pressed: true})}}
   onLongPress={this.props.dragBehavior}
@@ -62,8 +63,15 @@ export default class TodoListCard extends Component<TodoCardProps, TodoCardState
     navigation.navigate("TodoItems", {id: this.props.id })
   }}
   >
-  <View style={[styles.card, {height: 70, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
-    this.props.selected ? {backgroundColor: appColors.darkSelected} : null]}>
+  <View style={[styles.cardInvis, 
+  {height: 70,
+   paddingHorizontal: 14, 
+   paddingVertical: 12, 
+   marginBottom: 0, 
+   justifyContent: 'center',
+   borderRadius: 0,
+  }, 
+    this.props.selected ? {backgroundColor: appColors.dark} : null]}>
     <View style={{flex: 1, flexDirection: 'row'}}>
       <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
         <FontAwesomeIcon 
@@ -107,7 +115,7 @@ export default class TodoListCard extends Component<TodoCardProps, TodoCardState
     </View>
   </View>
 
-  </TouchableWithoutFeedback>
+  </TouchableNativeFeedback>
   );
   }
 }

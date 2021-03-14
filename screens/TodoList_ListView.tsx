@@ -19,6 +19,7 @@ import IconButtonTransparent from '../components/IconButtonTransparent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAllUsers, getTodoList, getTodoLists, setTodoLists } from '../data/UserData';
 import TodoListCard from '../components/TodoListCard';
+import TodoListCardSeparator from '../components/TodoListCardSeparator';
 
 interface AllViewProps {
   // userId: string;
@@ -111,6 +112,7 @@ class TodoAllView extends Component<AllViewProps, AllViewState> {
             this.setState({todoLists: data})
             setTodoLists(data)
           }}
+          ItemSeparatorComponent={TodoListCardSeparator}
         />
 
       </SafeAreaView>
