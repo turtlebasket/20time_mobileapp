@@ -12,7 +12,7 @@ import styles from "../styles/Styles"
 import TodoItemCard from '../components/TodoItemCard';
 import appColors from '../styles/Colors';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native'
-import { faArrowLeft, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCocktail, faCog, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import IconButtonCircle from '../components/IconButtonCircle';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -90,10 +90,13 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
           <Text style={styles.pageTitleLargeGreen}>{this.state.todoName}</Text>
           {/* Snap all of these to the right */}
           <View style={{marginLeft: 'auto'}}> 
-            <IconButtonCircle icon={faPlus} onPress={() => {
-              navigation.navigate("EditTodoItem", {id: '123'})
-            }} />
+            <IconButtonTransparent icon={faCog} color={appColors.lightGray} onPress={() => {
+              navigation.navigate("EditTodoList", {id: this.props.id})
+            }}/>
           </View>
+          <IconButtonCircle icon={faPlus} onPress={() => {
+            navigation.navigate("EditTodoItem", {id: '123'})
+          }} />
         </View>
 
         <DraggableFlatList
