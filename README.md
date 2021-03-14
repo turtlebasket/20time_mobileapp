@@ -25,7 +25,7 @@ users: [
         email: "",
         dob: "",
         todoLists: [
-        	{
+            {
                 id: "<todoList guid>",
                 title: "Errands",
                 description: "",
@@ -44,13 +44,13 @@ users: [
                         description: "blah",
                         dueDate: "<ISO time>",
                         complete: true
-                	}
-            	]
-        	}
+                    }
+                ]
+            }
         ],
         connections: [ // friends
-        	"<guid>",
-        	"<guid>"
+            "<guid>",
+            "<guid>"
         ]
     }
 ];
