@@ -97,6 +97,16 @@ export async function setTodoList(todoList: any) {
 }
 
 /**
+ * Removes the TodoList of a given GUID.
+ * @param listId GUID of list to be deleted
+ */
+export async function removeTodoList(listId: string) {
+  const user = await getCurrentUser();
+  user.todoLists = removeByGuid(user.TodoLists, listId);
+  setUser(user);
+}
+
+/**
  * Add OR unshift todo item to CURRENT user's todolist by todolist ID
  * @param listId ID of target todo list
  * @param todo todo object to be inserted/overwritten
@@ -108,6 +118,18 @@ export async function setTodoItem(listId: string, todo: any, end:boolean=false) 
   if (todoList == null) return
   todoList.todoItems = setByGuid(todoList.todoItems, todo, end=end);
   setUser(user);
+}
+
+/**
+ * Removes the TodoItem of a given GUID.
+ * @param listId GUID of item to be deleted
+ */
+export async function removeTodoItem(listId: string, todoId: string) {
+  var user = await getCurrentUser();
+  const todoList = getByGuid(user.todoLists, listId);
+  if (todoList == null) return
+  todoList.todoItems = removeByGuid(todoList.todoItems, todoId);
+  setUser(user)
 }
 
 /* ---------------------
@@ -159,11 +181,21 @@ export function setByGuid(list: any[], item: any, end:boolean= false, preserve:b
   return list;
 }
 
+export function removeByGuid(list: any[], guid: string) {
+  var itemIndex=list.findIndex(obj => {
+    return obj.id === guid;
+  })
+  if (itemIndex > -1) {
+    list.splice(itemIndex, 1);
+  }
+  return list;
+}
+
 // NOTE: NOT RECURSIVE
-export function jsonDiffKeys(obj1: any, obj2: any) {
+export function jsonDiffKeys(fromObj: any, toObj: any) {
   var diffKeys: any[] = [];
-  for (let i of Object.keys(obj1)) {
-    if (obj1[i] != obj2[i]) {
+  for (let i of Object.keys(fromObj)) {
+    if (fromObj[i] != toObj[i] || typeof toObj[i] == 'undefined') {
       diffKeys.push(i);
     }
   }

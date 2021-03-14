@@ -68,7 +68,7 @@ export default class TodoListCard extends Component<TodoCardProps, TodoCardState
       <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
         <FontAwesomeIcon 
           icon={this.props.public ? faEye : faEyeSlash} 
-          size={28}
+          size={24}
           style={{
           color: this.props.public ? appColors.lighterGray : appColors.lightGray,
           marginRight: 20,
@@ -84,6 +84,24 @@ export default class TodoListCard extends Component<TodoCardProps, TodoCardState
         <Text numberOfLines={1}
         style={[styles.pageText, {width: 170, color: appColors.lighterGray}, ]}
         >{this.props.description}</Text>
+      </View>
+
+      <View 
+      style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            // console.log(`EDIT CARD ${this.props.id}`)
+            navigation.navigate('EditTodoList', {id: this.props.id})
+          }}
+        >
+        <FontAwesomeIcon 
+          icon={faPencilAlt} 
+          size={18} 
+          style={{
+          color: appColors.lightGray,
+          }}
+        />
+        </TouchableWithoutFeedback>
       </View>
 
     </View>

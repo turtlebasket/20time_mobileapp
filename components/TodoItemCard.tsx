@@ -95,7 +95,7 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
         <TouchableWithoutFeedback>
         <FontAwesomeIcon 
           icon={faPencilAlt} 
-          size={16} 
+          size={18} 
           style={{
           color: appColors.lightGray,
           }}

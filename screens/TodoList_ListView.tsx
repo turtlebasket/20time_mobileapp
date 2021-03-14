@@ -39,7 +39,7 @@ class TodoAllView extends Component<AllViewProps, AllViewState> {
     }
   }
 
-  wantsToRefresh = this.props.navigation.addListener('blur', (payload: any) => {
+  wantsToRefresh = this.props.navigation.addListener('focus', (payload: any) => {
     this.refreshFromStorage();
     console.log(`NAVIGATION BACK PAYLOAD ${payload}`)
   })

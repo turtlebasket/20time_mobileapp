@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   Image,
   TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
 import miscstyles from '../styles/MiscStyles';
 import '../data/UserData';
@@ -81,6 +82,35 @@ class ConceptDemo extends Component {
     return (
       <ScrollView keyboardShouldPersistTaps={true}>
         <View style={styles.container}>
+
+
+          <View style={styles.cardInvis}>
+            <TouchableNativeFeedback
+            onPress = {() => {
+              Alert.alert(
+                'Alert Title',
+                'My Alert Msg',
+                [
+                  {
+                    text: 'Ask me later',
+                    onPress: () => console.log('Ask me later pressed')
+                  },
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                  },
+                  { text: 'OK', onPress: () => console.log('OK Pressed') }
+                ],
+                { cancelable: false }
+              );
+            }}
+            >
+              <Text style={[styles.pageTitle, {backgroundColor: appColors.green1, padding: 10}]}
+              >PRESSME</Text>
+            </TouchableNativeFeedback>
+          </View>
+
 
           <View style={styles.cardInvis}>
             <Text style={styles.pageTitleLargeGreen}>Concept Demo</Text>

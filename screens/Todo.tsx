@@ -17,7 +17,7 @@ export default class Todo extends Component {
         >
         <StackNav.Screen name="TodoLists" component={TodoAllViewWrapped}/>
         <StackNav.Screen name="EditTodoList" component={TodoListEditViewWrapped}/>
-        <StackNav.Screen name="TodoItems" component = {TodoListViewWrapped}/>
+        <StackNav.Screen name="TodoItems" component={TodoListViewWrapped}/>
         <StackNav.Screen name="EditTodoItem">
           {props => <TodoEditViewWrapped id={'abc'} />}
         </StackNav.Screen>

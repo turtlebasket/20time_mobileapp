@@ -30,10 +30,10 @@ users: [
                         dueDate: null,
                         complete: false
                     },
-                	{
-                    	id: "<todo guid>",
-                    	title: "another todo example",
-                    	description: "blah",
+                    {
+                        id: "<todo guid>",
+                        title: "another todo example",
+                        description: "blah",
                         dueDate: "<ISO time>",
                         complete: true
                 	}

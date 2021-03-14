@@ -115,6 +115,7 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
 
 export default function TodoListViewWrapped(props: any) {
   const navigation = useNavigation();
-  const route = useRoute();
+  // const route = useRoute();
+  const route = props.route;
   return <TodoListView {...props} id={route.params.id} navigation={navigation}/>;
 }

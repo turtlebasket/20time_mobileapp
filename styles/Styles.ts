@@ -101,6 +101,12 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
 
+  pageTextLight: {
+    color: appColors.lighterGray,
+    fontSize: fontSizes.small,
+    textAlign: 'left',
+  },
+
   pageTextBold: {
     color: appColors.white,
     fontSize: fontSizes.normal,
