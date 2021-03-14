@@ -12,12 +12,12 @@ import styles from "../styles/Styles"
 import miscstyles from "../styles/MiscStyles"
 import TodoItemCard from '../components/TodoItemCard';
 import appColors from '../styles/Colors';
-import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native'
+import { NavigationProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
 import { faArrowLeft, faPlus, faPlusCircle, faRoute } from '@fortawesome/free-solid-svg-icons';
 import IconButtonCircle from '../components/IconButtonCircle';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getTodoList, getTodoLists, setTodoLists } from '../data/UserData';
+import { getAllUsers, getTodoList, getTodoLists, setTodoLists } from '../data/UserData';
 import TodoListCard from '../components/TodoListCard';
 
 interface AllViewProps {
@@ -39,9 +39,8 @@ class TodoAllView extends Component<AllViewProps, AllViewState> {
     }
   }
 
-  wantsToRefresh = this.props.navigation.addListener('focus', (payload: any) => {
+  wantsToRefresh = this.props.navigation.addListener('focus', () => {
     this.refreshFromStorage();
-    console.log(`NAVIGATION BACK PAYLOAD ${payload}`)
   })
 
 
@@ -57,7 +56,9 @@ class TodoAllView extends Component<AllViewProps, AllViewState> {
 
   render() {
 
-    console.log("render loop")
+    getAllUsers().then((val) => {
+    console.log(`render loop | storage: ${JSON.stringify(val)}`)
+    })
 
     const { navigation } = this.props;
     const { todoLists } = this.state;

@@ -102,7 +102,10 @@ export async function setTodoList(todoList: any) {
  */
 export async function removeTodoList(listId: string) {
   const user = await getCurrentUser();
-  user.todoLists = removeByGuid(user.TodoLists, listId);
+  // console.log(`TODOLISTS ${JSON.stringify(user.todoLists)}`)
+  const todoListsNew = removeByGuid(user.todoLists, listId);
+  // console.log(`TODOLISTSNEW ${JSON.stringify(todoListsNew)}`)
+  user.todoLists = todoListsNew;
   setUser(user);
 }
 
@@ -182,6 +185,7 @@ export function setByGuid(list: any[], item: any, end:boolean= false, preserve:b
 }
 
 export function removeByGuid(list: any[], guid: string) {
+  // if (list === undefined) { list = [] }
   var itemIndex=list.findIndex(obj => {
     return obj.id === guid;
   })

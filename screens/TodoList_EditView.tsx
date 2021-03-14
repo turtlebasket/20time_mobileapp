@@ -61,7 +61,8 @@ export class TodoListEditView extends Component<TodoListEditorProps, TodoListEdi
 
         <View style={[styles.header, {}]}>
           <IconButtonTransparent icon={faArrowLeft} onPress={() => {
-            navigation.navigate('TodoLists')
+            navigation.goBack();
+            // navigation.navigate('TodoLists')
           }} />
           <TextInput // title
             autoFocus={true}
@@ -122,11 +123,13 @@ export class TodoListEditView extends Component<TodoListEditorProps, TodoListEdi
                 {
                   text: 'OK',
                   onPress: () => {
-                    removeTodoList(this.state.id);
-                    navigation.goBack();
+                    removeTodoList(this.state.id).then(() => {
+                      navigation.goBack();
+                    });
                   }
                 }
-              ]
+              ],
+              {cancelable: false}
             )
           }}
           />
