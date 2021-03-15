@@ -97,12 +97,26 @@ export class TodoListEditView extends Component<TodoListEditorProps, TodoListEdi
             icon={this.state.public ? faEye : faEyeSlash} 
             color={this.state.public ? appColors.lighterGray : appColors.lightGray} 
             onPress={() => {
-              const newPub = !this.state.public
-              this.setState({public: newPub})
-              setTodoList({id: this.state.id, public: newPub})
-              getTodoList(this.state.id).then((val) => {
-                console.log(val)
-              })
+
+              Alert.alert(
+                this.state.public ? 'Make private?' : 'Make public?',
+                this.state.public ? "This list will only be visible to you." : "This list will be visible on your profile.",
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log("cancelled")
+                  },
+                  {
+                    text: 'OK',
+                    onPress: () => {
+                      const newPub = !this.state.public
+                      this.setState({public: newPub})
+                      setTodoList({id: this.state.id, public: newPub})
+                    }
+                  }
+                ],
+                {cancelable: false}
+              )
             }}
             />
           </View>
