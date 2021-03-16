@@ -7,12 +7,15 @@ Made with React Native (TypeScript)
 
 ## To Do
 
-- [ ] Separate public/private dialog function
 - [x] Make TodoList settings page directly accessible from TodoList_ListView 
-- [ ] Add the ability to add/edit todo items in a list
+- [x] Add the ability to add/edit todo items in a list
+- [ ] Repeating todos
+- [ ] Due dates
+- [ ] Todo success rate tracking
+- [ ] Begin habits/analytics page layout
 - [ ] Automatically move checked TodoItems to bottom of TodoList, in order of most recent
-- [ ] Separate add/edit for todos (adder bar at bottom)
-- [ ] Begin habits page layout
+- [ ] Ability select multiple todos / batch actions
+- [ ] Separate adder component for todo items (text bar at bottom? circular plus button in corner/both?)
 
 ##  User Data Structure  
 
