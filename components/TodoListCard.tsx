@@ -28,6 +28,7 @@ interface TodoCardProps {
   title: string;
   description: string;
   public: boolean;
+  // length: number;
   selected: boolean;
   dragBehavior: any;
 }
@@ -43,7 +44,7 @@ interface TodoCardState {
 export default class TodoListCard extends Component<TodoCardProps, TodoCardState> {
 
   state={
-  pressed: false
+    pressed: false
   };
 
   constructor(props: any) {

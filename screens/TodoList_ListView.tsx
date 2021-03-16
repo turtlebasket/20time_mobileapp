@@ -9,11 +9,9 @@ import {
 } from 'react-native';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist'
 import styles from "../styles/Styles"
-import miscstyles from "../styles/MiscStyles"
-import TodoItemCard from '../components/TodoItemCard';
 import appColors from '../styles/Colors';
 import { NavigationProp, useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
-import { faArrowLeft, faPlus, faPlusCircle, faRoute } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCalendarPlus, faFolderPlus, faListUl, faPlus, faPlusCircle, faRoute } from '@fortawesome/free-solid-svg-icons';
 import IconButtonCircle from '../components/IconButtonCircle';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -57,9 +55,9 @@ class TodoAllView extends Component<AllViewProps, AllViewState> {
 
   render() {
 
-    getAllUsers().then((val) => {
-    console.log(`render loop | storage: ${JSON.stringify(val)}`)
-    })
+    // getAllUsers().then((val) => {
+    //   console.log(`render loop | storage: ${JSON.stringify(val)}`)
+    // })
 
     const { navigation } = this.props;
     const { todoLists } = this.state;
@@ -94,7 +92,7 @@ class TodoAllView extends Component<AllViewProps, AllViewState> {
           <Text style={styles.pageTitleLargeGreen}>To Do</Text>
           {/* Snap all of these to the right */}
           <View style={{marginLeft: 'auto'}}> 
-            <IconButtonCircle icon={faPlus} onPress={() => {
+            <IconButtonCircle icon={faFolderPlus} onPress={() => {
               navigation.navigate("EditTodoList", {id: null})
             }} />
           </View>

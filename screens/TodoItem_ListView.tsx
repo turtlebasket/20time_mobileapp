@@ -19,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getTodoList, getTodoLists } from '../data/UserData';
 
 interface ListViewProps {
+  listId: string;
   id: string;
   navigation: any;
   // navigation: NavigationProp<any,any>
@@ -45,10 +46,16 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
     super(props);
   }
 
+  wantsToRefresh = this.props.navigation.addListener('focus', () => {
+    this.refreshFromStorage();
+  })
+
   componentDidMount() {
-    console.log(this.props.id)
+    this.refreshFromStorage();
+  }
+
+  refreshFromStorage() {
     getTodoList(this.props.id).then((val: any) => {
-      // console.log(val)
       this.setState({todoName: val.title, todoItems: val.todoItems});
     })
   }
@@ -56,6 +63,7 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
   render() {
 
     const { todoItems } = this.state;
+    const { navigation } = this.props;
 
     type TodoItem = {
       id: string;
@@ -68,16 +76,16 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
     const renderItem = ({ item, index, drag, isActive }: RenderItemParams<TodoItem>) => (
       <View>
         <TodoItemCard
+          listId={this.props.id}
           id={item.id}
           title={item.title} 
           description={item.description} 
           selected={isActive}
           dragBehavior={drag}
+          navigation={navigation}
         />
       </View>
     );
-
-    const { navigation } = this.props;
 
     return (
       <SafeAreaView style={styles.container}>
@@ -95,7 +103,7 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
             }}/>
           </View>
           <IconButtonCircle icon={faPlus} onPress={() => {
-            navigation.navigate("EditTodoItem", {id: '123'})
+            navigation.navigate("EditTodoItem", {id: null, listId: this.props.id})
           }} />
         </View>
 
@@ -120,5 +128,5 @@ export default function TodoListViewWrapped(props: any) {
   const navigation = useNavigation();
   // const route = useRoute();
   const route = props.route;
-  return <TodoListView {...props} id={route.params.id} navigation={navigation}/>;
+  return <TodoListView {...props} id={route.params.id} listId={route.params.listId} navigation={navigation}/>;
 }

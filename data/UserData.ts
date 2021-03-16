@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useScrollToTop } from '@react-navigation/native';
 import { Value } from 'react-native-reanimated';
 
-/* ---------------------
- * LOCAL STORAGE HELPERS 
- * ---------------------
+/* --------------------------------------------------
+ *              LOCAL STORAGE HELPERS 
+ * --------------------------------------------------
  */
 
 /**
@@ -75,6 +75,21 @@ export async function getTodoList(id: string) {
 }
 
 /**
+ * Get TodoItem at given GUID
+ * @param listId GUID of parent TodoList
+ * @param todoId GUID of target TodoItem
+ * @returns TodoItem object at given GUID
+ */
+export async function getTodoItem(listId: string, todoId: string) {
+  const user = await getCurrentUser();
+  const currTodoList = await getByGuid(user.todoLists, listId);
+  console.log(`TODOITEMS ${JSON.stringify(currTodoList.todoItems)}`)
+  const todoItem = await getByGuid(currTodoList.todoItems, todoId);
+  console.log(`TODOITEM ${JSON.stringify(todoItem)}`)
+  return todoItem;
+}
+
+/**
  * Set todoLists of a user. USE WITH CAUTION, THIS OVERWRITES EVERYTHING!
  * @param todoLists new todoLists object
  */
@@ -102,9 +117,7 @@ export async function setTodoList(todoList: any) {
  */
 export async function removeTodoList(listId: string) {
   const user = await getCurrentUser();
-  // console.log(`TODOLISTS ${JSON.stringify(user.todoLists)}`)
   const todoListsNew = removeByGuid(user.todoLists, listId);
-  // console.log(`TODOLISTSNEW ${JSON.stringify(todoListsNew)}`)
   user.todoLists = todoListsNew;
   setUser(user);
 }
@@ -135,9 +148,9 @@ export async function removeTodoItem(listId: string, todoId: string) {
   setUser(user)
 }
 
-/* ---------------------
- * CLOUD STORAGE HELPERS 
- * ---------------------
+/* --------------------------------------------------
+ *               CLOUD STORAGE HELPERS 
+ * --------------------------------------------------
  */
 
 export async function toCloud() {
@@ -149,9 +162,9 @@ export async function fromCloud() {
 export async function syncDiskWithCloud() {
 }
 
-/* ----------------------
- * JSON STRUCTURE HELPERS
- * ----------------------
+/* --------------------------------------------------
+ *              JSON STRUCTURE HELPERS 
+ * --------------------------------------------------
  */
 
 export function getByGuid(list: any[], guid: string) {

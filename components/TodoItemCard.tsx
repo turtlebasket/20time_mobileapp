@@ -18,6 +18,7 @@ import {
   faCircle, 
   faPencilAlt, 
 } from '@fortawesome/free-solid-svg-icons';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 interface TodoItemCardProps {
   id: string;
@@ -27,6 +28,8 @@ interface TodoItemCardProps {
   // completeInitial: boolean;
   selected: boolean;
   dragBehavior: any;
+  listId: string;
+  navigation: any;
 }
 
 interface TodoItemCardState {
@@ -52,59 +55,63 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
 
   render() {
 
-  return (
-    <TouchableWithoutFeedback 
-    delayLongPress={240}
-    // onLongPress={() => {this.setState({pressed: true})}}
-    onLongPress={this.props.dragBehavior}
-    onPressOut={() => {this.setState({pressed: false})}}
-    >
-    <View style={[styles.card, {height: 70, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
-      this.props.selected ? {backgroundColor: appColors.darkSelected} : null]}>
-      <View style={{flex: 1, flexDirection: 'row'}}>
-      <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
-        <TouchableWithoutFeedback
-        onPress={() => {
-          this.setState({complete: !this.state.complete});
-        }}
-        >
-        <FontAwesomeIcon 
-          icon={this.state.complete ? faCheckCircle : faCircle} 
-          size={33}
-          style={{
-          color: this.state.complete ? appColors.green1 : appColors.lightGray,
-          marginRight: 20,
-          }}
-        />
-        </TouchableWithoutFeedback>
-      </View>
+    const { navigation } = this.props
 
-      <View style={{justifyContent: 'center'}}>
-      <Text 
-        numberOfLines={1} 
-        style={[
-        styles.pageTextBold, this.state.complete ? styles.strikethrough : null,
-        {width: 180}]}>{this.props.title}</Text>
-      <Text numberOfLines={1}
-      style={[styles.pageText, {width: 170, color: appColors.lighterGray}, this.state.complete ? styles.strikethrough : null]}
-      >{this.props.description}</Text>
-      </View>
-
-      <View 
-      style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
-        <TouchableWithoutFeedback>
-        <FontAwesomeIcon 
-          icon={faPencilAlt} 
-          size={18} 
-          style={{
-          color: appColors.lightGray,
+    return (
+      <TouchableWithoutFeedback 
+      delayLongPress={240}
+      // onLongPress={() => {this.setState({pressed: true})}}
+      onLongPress={this.props.dragBehavior}
+      onPressOut={() => {this.setState({pressed: false})}}
+      >
+      <View style={[styles.card, {height: 70, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
+        this.props.selected ? {backgroundColor: appColors.darkSelected} : null]}>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
+          <TouchableWithoutFeedback
+          onPress={() => {
+            this.setState({complete: !this.state.complete});
           }}
-        />
-        </TouchableWithoutFeedback>
+          >
+          <FontAwesomeIcon 
+            icon={this.state.complete ? faCheckCircle : faCircle} 
+            size={33}
+            style={{
+            color: this.state.complete ? appColors.green1 : appColors.lightGray,
+            marginRight: 20,
+            }}
+          />
+          </TouchableWithoutFeedback>
+        </View>
+
+        <View style={{justifyContent: 'center'}}>
+        <Text 
+          numberOfLines={1} 
+          style={[
+          styles.pageTextBold, this.state.complete ? styles.strikethrough : null,
+          {width: 180}]}>{this.props.title}</Text>
+        <Text numberOfLines={1}
+        style={[styles.pageText, {width: 170, color: appColors.lighterGray}, this.state.complete ? styles.strikethrough : null]}
+        >{this.props.description}</Text>
+        </View>
+
+        <View 
+        style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
+          <TouchableWithoutFeedback onPress={() => {
+            navigation.navigate('EditTodoItem', {id: this.props.id, listId: this.props.listId});
+          }}>
+            <FontAwesomeIcon 
+              icon={faPencilAlt} 
+              size={18} 
+              style={{
+              color: appColors.lightGray,
+              }}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+        </View>
       </View>
-      </View>
-    </View>
-    </TouchableWithoutFeedback>
-  );
+      </TouchableWithoutFeedback>
+    );
   }
 }
