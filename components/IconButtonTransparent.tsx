@@ -13,6 +13,7 @@ export default function IconButtonTransparent(props: any) {
     height: len,
     width: len,
     margin: 10,
+    marginHorizontal: 4,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',

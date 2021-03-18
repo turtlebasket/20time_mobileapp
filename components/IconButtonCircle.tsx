@@ -12,7 +12,7 @@ export default function IconButtonCircle(props: any) {
       <View style={{
       height: len,
       width: len,
-      margin: 10,
+      margin: 4,
       borderRadius: len / 2,
       backgroundColor: appColors.green1,
       alignItems: 'center',
