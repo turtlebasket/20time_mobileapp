@@ -13,6 +13,7 @@ export const appColors = {
   black: "#1B1823",
   dark: "#23242B",
   darkSelected: "#303038",
+  midGray: "#424242",
   lightGray: "#707070",
   lighterGray: "#b0b0b0",
   green1: "#72B84D", // brightest

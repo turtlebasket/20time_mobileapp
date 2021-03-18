@@ -8,7 +8,7 @@ export default function TodoListCardSeparator() {
       style={{
         width: "94%",
         height: 1,
-        backgroundColor: appColors.lightGray,
+        backgroundColor: appColors.midGray,
         alignSelf: 'center'
       }}
     />
