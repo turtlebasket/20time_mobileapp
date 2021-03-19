@@ -6,7 +6,7 @@ export default function TodoListCardSeparator() {
   return (
     <View
       style={{
-        width: "94%",
+        width: "90%",
         height: 1,
         backgroundColor: appColors.midGray,
         alignSelf: 'center'

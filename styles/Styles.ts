@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 4,
     paddingHorizontal: 12,
+    minWidth: 170,
   },
 
   borderBox: {

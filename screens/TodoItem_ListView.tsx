@@ -6,6 +6,7 @@ import {
   TouchableNativeFeedback,
   Image,
   FlatList,
+  TouchableHighlightBase,
 } from 'react-native';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist'
 import styles from "../styles/Styles"
@@ -16,7 +17,8 @@ import { faArrowLeft, faCocktail, faCog, faPlus, faPlusCircle } from '@fortaweso
 import IconButtonCircle from '../components/IconButtonCircle';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getTodoList, getTodoLists } from '../data/UserData';
+import { getTodoList, getTodoLists, setTodoList } from '../data/UserData';
+import TodoCard from '../components/TodoCardOld';
 
 interface ListViewProps {
   listId: string;
@@ -55,11 +57,14 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
   }
 
   refreshFromStorage() {
-    getTodoList(this.props.id).then((val: any) => {
-      this.setState({todoName: val.title, todoItems: val.todoItems});
-    })
+    console.log("HIHIHI")
+    try {
+      getTodoList(this.props.id).then((val: any) => {
+        this.setState({todoName: val.title, todoItems: val.todoItems});
+      })
+    } catch {}
   }
-
+  
   render() {
 
     const { todoItems } = this.state;
@@ -69,10 +74,11 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
       id: string;
       title: string;
       description: string;
+      complete?: boolean;
       selected?: boolean;
     }
 
-    // const renderItem = ({ item, index, drag, isActive }: RenderItemParams<TodoItem>) => (
+    const ref = React.createRef<TodoItemCard>(); // for use in TodoItemCard returned by renderItem()
     const renderItem = ({ item, index, drag, isActive }: RenderItemParams<TodoItem>) => (
       <View>
         <TodoItemCard
@@ -81,8 +87,11 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
           title={item.title} 
           description={item.description} 
           selected={isActive}
+          complete={item.complete}
           dragBehavior={drag}
           navigation={navigation}
+          ref={ref}
+          refreshFromStorage={() => {this.refreshFromStorage(); this.render();}} 
         />
       </View>
     );
@@ -107,15 +116,24 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
           }} />
         </View>
 
+        {/* ADD LATER 
+        <Text style={[styles.pageTitle, 
+        {color: appColors.lightGray, display: this.state.todoItems.length > 0 ? 'none' : 'flex'}]}>
+        Nothing here yet. Add some todos!</Text> */}
+
         <DraggableFlatList
           style={{
             width: "100%",
             minWidth: "100%",
           }}
+          dragItemOverflow={false}
           data={todoItems}
           renderItem={renderItem}
           keyExtractor={(item, index) => `draggable-item-${item.id}`}
-          onDragEnd={({ data }) => this.setState({todoItems: data})}
+          onDragEnd={({ data }) => {
+            this.setState({todoItems: data})
+            setTodoList({id: this.props.id, todoItems: data})
+          }}
         />
 
       </SafeAreaView>

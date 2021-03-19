@@ -83,9 +83,9 @@ export async function getTodoList(id: string) {
 export async function getTodoItem(listId: string, todoId: string) {
   const user = await getCurrentUser();
   const currTodoList = await getByGuid(user.todoLists, listId);
-  console.log(`TODOITEMS ${JSON.stringify(currTodoList.todoItems)}`)
+  // console.log(`TODOITEMS ${JSON.stringify(currTodoList.todoItems)}`)
   const todoItem = await getByGuid(currTodoList.todoItems, todoId);
-  console.log(`TODOITEM ${JSON.stringify(todoItem)}`)
+  // console.log(`TODOITEM ${JSON.stringify(todoItem)}`)
   return todoItem;
 }
 
@@ -132,7 +132,38 @@ export async function setTodoItem(listId: string, todo: any, end:boolean=false) 
   var user = await getCurrentUser();
   const todoList = getByGuid(user.todoLists, listId);
   if (todoList == null) return
+  var completeOld = false;
+  try {
+    completeOld = getByGuid(todoList.todoItems, todo.id).complete;
+  }
+  catch{ /* Do nothing if null values */ }
   todoList.todoItems = setByGuid(todoList.todoItems, todo, end=end);
+
+  // IF TODO NEWLY COMPLETED, MOVE DOWN TO "TOP OF BOTTOM"
+  if (todo.complete == true && completeOld == false) {
+    const currIndex: number = todoList.todoItems.findIndex((obj: any) => {
+      return obj.id === todo.id;
+    })
+    for (let i = currIndex+1; i < todoList.todoItems.length; i++) {
+      if (!todoList.todoItems[i].complete) {
+        // https://stackoverflow.com/a/7180095/9096067
+        todoList.todoItems.splice(i+1, 0, todoList.todoItems.splice(currIndex, 1)[0])
+      }
+    }
+
+    // Hyper-inefficient alternative
+    // for (let i = currIndex; i < todoList.todoItems.length; i++) {
+    //   console.log(todoList.todoItems[i+1])
+    //   if (todoList.todoItems[i+1].complete == false) {
+    //     let temp = objVal(todoList.todoItems[i]);
+    //     console.log(`TEMP ${JSON.stringify(temp)}`)
+    //     console.log(`SWITCH WITH ${JSON.stringify(todoList.todoItems[i])}`)
+    //     todoList.todoItems[i+1] = todo;
+    //     todoList.todoItems[i] = temp;
+    //     console.log(`NEW ORDER ${JSON.stringify(todoList.todoItems)}`)
+    //   }
+    // }
+  }
   setUser(user);
 }
 
@@ -178,6 +209,7 @@ export function getByGuid(list: any[], guid: string) {
 
 export function setByGuid(list: any[], item: any, end:boolean= false, preserve:boolean=true) {
   if (list === undefined) { list = []; }
+  if (typeof item.id == 'undefined') { return list }
   var itemIndex=list.findIndex(obj => {
     return obj.id === item.id
   })
@@ -206,6 +238,10 @@ export function removeByGuid(list: any[], guid: string) {
     list.splice(itemIndex, 1);
   }
   return list;
+}
+
+export function objVal(obj: any) {
+  return JSON.parse(JSON.stringify(obj));
 }
 
 // NOTE: NOT RECURSIVE

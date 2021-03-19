@@ -111,7 +111,7 @@ export class TodoListEditView extends Component<TodoListEditorProps, TodoListEdi
                     onPress: () => {
                       const newPub = !this.state.public
                       this.setState({public: newPub})
-                      setTodoList({id: this.state.id, public: newPub})
+                      setTodoList({id: this.state.id, public: newPub});
                     }
                   }
                 ],
@@ -137,7 +137,7 @@ export class TodoListEditView extends Component<TodoListEditorProps, TodoListEdi
                 {
                   text: 'OK',
                   onPress: () => {
-                    removeTodoList(this.state.id).then(() => {
+                    removeTodoList(this.state.id).finally(() => {
                       navigation.goBack();
                     });
                   }

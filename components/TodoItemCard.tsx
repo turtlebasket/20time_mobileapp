@@ -19,17 +19,19 @@ import {
   faPencilAlt, 
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { setTodoItem } from '../data/UserData';
+import appConfig from '../data/AppConfig';
 
 interface TodoItemCardProps {
   id: string;
   title: string;
   description: string;
-  // panHandlers: GestureResponderHandlers;
-  // completeInitial: boolean;
+  complete: boolean | undefined;
   selected: boolean;
   dragBehavior: any;
   listId: string;
   navigation: any;
+  refreshFromStorage: any;
 }
 
 interface TodoItemCardState {
@@ -45,12 +47,12 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
 
   state={
   // complete: this.props.completeInitial,
-  complete: false,
-  pressed: false
+    complete: this.props.complete ? this.props.complete : false,
+    pressed: false
   };
 
   constructor(props: any) {
-  super(props);
+    super(props);
   }
 
   render() {
@@ -59,10 +61,12 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
 
     return (
       <TouchableWithoutFeedback 
-      delayLongPress={240}
+      delayLongPress={appConfig.longPressDelay}
       // onLongPress={() => {this.setState({pressed: true})}}
-      onLongPress={this.props.dragBehavior}
-      onPressOut={() => {this.setState({pressed: false})}}
+      onLongPress={!this.state.complete ? this.props.dragBehavior : null}
+      onPressOut={() => {
+        this.setState({pressed: false});
+      }}
       >
       <View style={[styles.card, {height: 70, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
         this.props.selected ? {backgroundColor: appColors.darkSelected} : null]}>
@@ -70,7 +74,11 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
         <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
           <TouchableWithoutFeedback
           onPress={() => {
-            this.setState({complete: !this.state.complete});
+            const newComp = !this.state.complete;
+            setTodoItem(this.props.listId, {id: this.props.id, complete: newComp}).then(() => {
+              this.setState({complete: newComp});
+              this.props.refreshFromStorage();
+            })
           }}
           >
           <FontAwesomeIcon 
@@ -96,7 +104,8 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
         </View>
 
         <View 
-        style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
+        style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center',
+        display: this.state.complete ? 'none' : 'flex' }}>
           <TouchableWithoutFeedback onPress={() => {
             navigation.navigate('EditTodoItem', {id: this.props.id, listId: this.props.listId});
           }}>

@@ -26,6 +26,7 @@ interface TodoEditorState {
   id: string;
   title: string;
   description: string;
+  complete: boolean;
 }
 
 export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
@@ -35,17 +36,19 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
     this.state={
       id: "",
       title: "",
-      description: ""
+      description: "",
+      complete: false
     };
   }
 
   componentDidMount() {
     let uuid = this.props.id ? this.props.id : uuidv4();
     this.setState({id: uuid});
-    console.log(`UUID ${uuid}`)
+    // console.log(`UUID ${uuid}`)
     getTodoItem(this.props.listId, uuid).then(val => {
-      console.log(`VAL ${val}`);
-      this.setState({title: val.title, description: val.description})
+      // console.log(`VAL ${val}`);
+      this.setState({title: val.title, description: val.description, complete: val.complete})
+      setTodoItem(this.props.listId, {complete: this.state.complete})
     });
   }
 
@@ -62,7 +65,8 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
             navigation.goBack();
           }} />
           <TextInput // title
-            style={[styles.textBoxTitle, {minWidth: 90}]}
+            // must set both minwidth & width for some reason
+            style={[styles.textBoxTitle, {minWidth: 170, width: 210}]} 
             multiline={false}
             numberOfLines={1}
             placeholder={"Title"}
@@ -93,8 +97,8 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
                   {
                     text: 'OK',
                     onPress: () => {
-                      removeTodoItem(this.props.listId, this.state.id).then(() => {
-                        navigation.navigate("TodoItems");
+                      removeTodoItem(this.props.listId, this.state.id).finally(() => {
+                        navigation.navigate("TodoLists");
                       });
                     }
                   }
@@ -134,6 +138,7 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
             this.setState({description: contents});
             setTodoItem(this.props.listId, {id: this.state.id, description: contents});
           }}
+          ref={React.createRef()}
         />
       </View>
     );

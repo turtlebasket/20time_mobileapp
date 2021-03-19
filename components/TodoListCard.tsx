@@ -21,6 +21,7 @@ import {
   faEyeSlash, 
   faPencilAlt, 
 } from '@fortawesome/free-solid-svg-icons';
+import appConfig from '../data/AppConfig';
 
 interface TodoCardProps {
   navigation: any;
@@ -56,7 +57,7 @@ export default class TodoListCard extends Component<TodoCardProps, TodoCardState
 
   return (
   <TouchableNativeFeedback 
-  delayLongPress={240}
+  delayLongPress={appConfig.longPressDelay}
   // onLongPress={() => {this.setState({pressed: true})}}
   onLongPress={this.props.dragBehavior}
   onPressOut={() => {this.setState({pressed: false})}}
