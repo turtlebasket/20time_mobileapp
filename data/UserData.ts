@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useScrollToTop } from '@react-navigation/native';
 import { Value } from 'react-native-reanimated';
 
-/* --------------------------------------------------
- *              LOCAL STORAGE HELPERS 
- * --------------------------------------------------
+/* --------------------------------------------------------
+ *              LOCAL STORAGE HELPERS - TODO
+ * --------------------------------------------------------
  */
 
 /**
@@ -155,19 +155,6 @@ export async function setTodoItem(listId: string, todo: any, end:boolean=false) 
         break;
       }
     }
-
-    // Hyper-inefficient alternative
-    // for (let i = currIndex; i < todoList.todoItems.length; i++) {
-    //   console.log(todoList.todoItems[i+1])
-    //   if (todoList.todoItems[i+1].complete == false) {
-    //     let temp = objVal(todoList.todoItems[i]);
-    //     console.log(`TEMP ${JSON.stringify(temp)}`)
-    //     console.log(`SWITCH WITH ${JSON.stringify(todoList.todoItems[i])}`)
-    //     todoList.todoItems[i+1] = todo;
-    //     todoList.todoItems[i] = temp;
-    //     console.log(`NEW ORDER ${JSON.stringify(todoList.todoItems)}`)
-    //   }
-    // }
   }
 
   // IF TODO NEWLY UN-COMPLETED, MOVE TO TOP
@@ -213,6 +200,14 @@ export async function removeTodoItem(listId: string, todoId: string) {
   todoList.todoItems = removeByGuid(todoList.todoItems, todoId);
   setUser(user)
 }
+
+/* --------------------------------------------------------
+ *              LOCAL STORAGE HELPERS - HABIT
+ * --------------------------------------------------------
+ */
+
+
+
 
 /* --------------------------------------------------
  *               CLOUD STORAGE HELPERS 

@@ -14,7 +14,7 @@ import styles from "../styles/Styles"
 import TodoItemCard from '../components/TodoItemCard';
 import appColors from '../styles/Colors';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native'
-import { faArrowLeft, faCheckDouble, faCocktail, faCog, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCheckDouble, faCocktail, faCog, faPlus, faPlusCircle, faTasks } from '@fortawesome/free-solid-svg-icons';
 import IconButtonCircle from '../components/IconButtonCircle';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -112,7 +112,7 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
               navigation.navigate("EditTodoList", {id: this.props.id})
             }}/>
           </View>
-          <IconButtonTransparent icon={faCheckDouble} color={appColors.red1} onPress={() => {
+          <IconButtonTransparent icon={faTasks} color={appColors.red1} onPress={() => {
             Alert.alert(
               'Clear all completed tasks?',
               'This action cannot be undone.',

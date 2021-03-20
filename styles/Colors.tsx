@@ -18,6 +18,7 @@ export const appColors = {
   lighterGray: "#b0b0b0",
   green1: "#72B84D", // brightest
   red1: "#f24545", // for trash cans and errors
+  pink1: "#ff85cc"
 }
 
 export default appColors;
