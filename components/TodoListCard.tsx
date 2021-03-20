@@ -92,7 +92,8 @@ export default class TodoListCard extends Component<TodoCardProps, TodoCardState
         style={[
         styles.pageTextBold, {width: 180}]}>{this.props.title}</Text>
         <Text numberOfLines={1}
-        style={[styles.pageText, {width: 170, color: appColors.lighterGray}, ]}
+        style={[styles.pageText, {width: 170, color: appColors.lighterGray, 
+          display: this.props.description ? 'flex' : 'none'}, ]}
         >{this.props.description}</Text>
       </View>
 

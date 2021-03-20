@@ -68,7 +68,7 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
         this.setState({pressed: false});
       }}
       >
-      <View style={[styles.card, {height: 70, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
+      <View style={[styles.card, {height: 67, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
         this.props.selected ? {backgroundColor: appColors.darkSelected} : null]}>
         <View style={{flex: 1, flexDirection: 'row'}}>
         <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
@@ -99,8 +99,10 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
           styles.pageTextBold, this.state.complete ? styles.strikethrough : null,
           {width: 180}]}>{this.props.title}</Text>
         <Text numberOfLines={1}
-        style={[styles.pageText, {width: 170, color: appColors.lighterGray}, this.state.complete ? styles.strikethrough : null]}
-        >{this.props.description}</Text>
+        style={[styles.pageText, {width: 170, color: appColors.lighterGray, 
+          display: this.props.description ? 'flex' : 'none'},
+          this.state.complete ? styles.strikethrough : null]}
+          >{this.props.description}</Text>
         </View>
 
         <View 

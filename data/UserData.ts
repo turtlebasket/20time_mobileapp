@@ -145,9 +145,14 @@ export async function setTodoItem(listId: string, todo: any, end:boolean=false) 
       return obj.id === todo.id;
     })
     for (let i = currIndex+1; i < todoList.todoItems.length; i++) {
-      if (!todoList.todoItems[i].complete) {
+      if (todoList.todoItems[i].complete) {
         // https://stackoverflow.com/a/7180095/9096067
-        todoList.todoItems.splice(i+1, 0, todoList.todoItems.splice(currIndex, 1)[0])
+        todoList.todoItems.splice(i-1, 0, todoList.todoItems.splice(currIndex, 1)[0])
+        break;
+      }
+      else if (i == todoList.todoItems.length-1 && !todoList.todoItems[i].complete) {
+        todoList.todoItems.splice(i, 0, todoList.todoItems.splice(currIndex, 1)[0])
+        break;
       }
     }
 
@@ -164,6 +169,36 @@ export async function setTodoItem(listId: string, todo: any, end:boolean=false) 
     //   }
     // }
   }
+
+  // IF TODO NEWLY UN-COMPLETED, MOVE TO TOP
+  else if (todo.complete == false && completeOld == true) {
+    const currIndex: number = todoList.todoItems.findIndex((obj: any) => {
+      return obj.id === todo.id;
+    })
+    // https://stackoverflow.com/a/7180095/9096067
+    todoList.todoItems.splice(0, 0, todoList.todoItems.splice(currIndex, 1)[0])
+  }
+
+  setUser(user);
+}
+
+/**
+ * Clear all completed todoItems from a list.
+ * @param listId ID of target list
+ */
+export async function clearSelectedTodos(listId: string) {
+  var user = await getCurrentUser();
+  var todoList = getByGuid(user.todoLists, listId);
+  var todoItems = todoList.todoItems;
+  console.log(`TODOITEMS ${JSON.stringify(todoItems)}`)
+  for (let i = todoItems.length-1; i >= 0; i--) {
+    console.log(todoItems[i]);
+    if (todoItems[i].complete) {
+      console.log("COMPLETED")
+      todoItems.splice(i, 1);
+    }
+  }
+  console.log(`TODOITEMS ${JSON.stringify(todoItems)}`)
   setUser(user);
 }
 

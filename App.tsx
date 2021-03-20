@@ -58,7 +58,7 @@ const App = () => {
       >
         <Tab.Screen name="Todo" component={Todo} options={
           {tabBarIcon: ({color, size}) => (
-            <FontAwesomeIcon icon={faCheckDouble} color={color} size={size}/>
+            <FontAwesomeIcon icon={faCheck} color={color} size={size}/>
             )}
         } />
         <Tab.Screen name="Habits" component={Habits} options={

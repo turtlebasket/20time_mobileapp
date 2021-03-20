@@ -7,17 +7,18 @@ import {
   Image,
   FlatList,
   TouchableHighlightBase,
+  Alert,
 } from 'react-native';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist'
 import styles from "../styles/Styles"
 import TodoItemCard from '../components/TodoItemCard';
 import appColors from '../styles/Colors';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native'
-import { faArrowLeft, faCocktail, faCog, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCheckDouble, faCocktail, faCog, faPlus, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import IconButtonCircle from '../components/IconButtonCircle';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getTodoList, getTodoLists, setTodoList } from '../data/UserData';
+import { clearSelectedTodos, getTodoList, getTodoLists, setTodoList } from '../data/UserData';
 import TodoCard from '../components/TodoCardOld';
 
 interface ListViewProps {
@@ -57,7 +58,7 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
   }
 
   refreshFromStorage() {
-    console.log("HIHIHI")
+    // console.log("REFRESH FROM STORAGE")
     try {
       getTodoList(this.props.id).then((val: any) => {
         this.setState({todoName: val.title, todoItems: val.todoItems});
@@ -111,6 +112,26 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
               navigation.navigate("EditTodoList", {id: this.props.id})
             }}/>
           </View>
+          <IconButtonTransparent icon={faCheckDouble} color={appColors.red1} onPress={() => {
+            Alert.alert(
+              'Clear all completed tasks?',
+              'This action cannot be undone.',
+              [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log("cancelled")
+                },
+                {
+                  text: 'OK',
+                  onPress: () => {
+                    clearSelectedTodos(this.props.id);
+                    this.refreshFromStorage();
+                  }
+                }
+              ],
+              {cancelable: false}
+            )
+          }}/>
           <IconButtonCircle icon={faPlus} onPress={() => {
             navigation.navigate("EditTodoItem", {id: null, listId: this.props.id})
           }} />

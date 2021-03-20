@@ -5,14 +5,15 @@
 Made with React Native (TypeScript)
 </div>
 
-## To Do
+## To Do - Fundamentals
 
 - [x] Make TodoList settings page directly accessible from TodoList_ListView 
 - [x] Add the ability to add/edit todo items in a list
 - [x] Todo Checkability, stored
 - [x] Automatically move checked TodoItems to bottom of TodoList, in order of most recent (in setTodoItem)
-- [ ] When unchecking bottom TodoItems, move back to top automatically & FIX DRAG GLITCH
+- [x] When unchecking bottom TodoItems, move back to top automatically
 - [ ] Clear all checked todos
+- [ ] FIX DRAG GLITCH
 - [ ] Due dates
 - [ ] Repeating todos
 - [ ] Habits data structure
