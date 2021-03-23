@@ -295,19 +295,3 @@ export function genUUIDTime() {
   let guid = [u.substr(0,8), u.substr(8,4), '4000-8' + u.substr(13,3), u.substr(16,12)].join('-');
   return guid;
 }
-
-/**
- * Get UTC timestamp
- * @returns UTC timestamp, no milliseconds
- */
-export function timestampUTC() {
-  return Math.floor(Date.now() / 1000);
-}
-
-/**
- * Get UTC timestamp (ms included)
- * @returns UTC timestamp WITH millseconds
- */
-export function tiemstampMsUTC() {
-  return Date.now();
-}
