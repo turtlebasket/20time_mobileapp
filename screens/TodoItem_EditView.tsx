@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import { getTodoItem, getTodoList, removeTodoItem, setTodoItem } from '../data/UserData';
 import { v4 as uuidv4 } from 'uuid';
+import { Text } from 'react-native-svg';
 
 interface TodoEditorProps {
   id: string;
@@ -59,7 +60,7 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
     return (
       <View style={styles.container}>
 
-        <View style={[styles.header, {}]}>
+        <View style={[styles.headerMultiline, {}]}>
           <IconButtonTransparent icon={faArrowLeft} onPress={() => {
             // navigation.navigate('TodoItems')
             navigation.goBack();
@@ -67,14 +68,13 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
           <TextInput // title
             // must set both minwidth & width for some reason
             style={[styles.textBoxTitle, {minWidth: 170, width: 210}]} 
-            multiline={false}
-            numberOfLines={1}
+            multiline
             placeholder={"Title"}
             placeholderTextColor={appColors.lightGray}
             selectionColor={appColors.green1}
             textAlign={'left'}
             value={this.state.title}
-            onChangeText={(contents) => {
+            onChangeText={(contents: any) => {
               this.setState({title: contents});
               setTodoItem(this.props.listId, {id: this.state.id, title: contents});
             }}
@@ -98,7 +98,7 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
                     text: 'OK',
                     onPress: () => {
                       removeTodoItem(this.props.listId, this.state.id).finally(() => {
-                        navigation.navigate("TodoLists");
+                        navigation.navigate("TodoItems");
                       });
                     }
                   }

@@ -81,8 +81,7 @@ const styles = StyleSheet.create({
 
   pageTitleLargeGreen: {
     fontFamily: "Nunito",
-    // textAlign: "left",
-    textAlign: "center",
+    textAlign: "left",
     color: appColors.green1,
     fontWeight: 'bold',
     fontSize: fontSizes.title,
@@ -181,9 +180,13 @@ const styles = StyleSheet.create({
     color: appColors.white,
     fontSize: fontSizes.title,
     fontWeight: 'bold',
-    marginVertical: 4,
+    marginVertical: 10,
     paddingHorizontal: 12,
+    paddingVertical: 4,
     minWidth: 170,
+    textAlignVertical: 'top',
+    flex: 3,
+    // minHeight: 40,
   },
 
   borderBox: {
@@ -197,7 +200,7 @@ const styles = StyleSheet.create({
     height: 62,
   },
 
-  header: {
+  header: { // USED FOR FIXED TITLES
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'transparent',
@@ -211,6 +214,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  headerMultiline: { // USED FOR EXPANDING TITLES
+    flex: 0,
+    flexDirection: 'row',
+    // minHeight: 60,
+    height: 'auto',
+    maxHeight: 180,
+    paddingHorizontal: 8,
+    marginHorizontal: 10,
+    width: '100%',
+  }
 
 });
 

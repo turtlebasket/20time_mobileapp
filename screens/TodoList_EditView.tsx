@@ -66,7 +66,7 @@ export class TodoListEditView extends Component<TodoListEditorProps, TodoListEdi
           }} />
           <TextInput // title
             autoFocus={true}
-            style={[styles.textBoxTitle, {minWidth: 90}]}
+            style={[styles.textBoxTitle, {color: appColors.green1, minWidth: 90, width: 210}]}
             multiline={false}
             numberOfLines={1}
             placeholder={"Title"}

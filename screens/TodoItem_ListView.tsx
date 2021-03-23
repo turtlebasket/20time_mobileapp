@@ -105,7 +105,8 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
           <IconButtonTransparent icon={faArrowLeft} onPress={() => {
             navigation.navigate("TodoLists")
           }} />
-          <Text style={styles.pageTitleLargeGreen}>{this.state.todoName}</Text>
+          <Text style={[styles.pageTitleLargeGreen, {width: 160}]} numberOfLines={1}
+          >{this.state.todoName}</Text>
           {/* Snap all of these to the right */}
           <View style={{marginLeft: 'auto'}}> 
             <IconButtonTransparent icon={faCog} color={appColors.lightGray} onPress={() => {
