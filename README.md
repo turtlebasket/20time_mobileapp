@@ -5,7 +5,7 @@
 Made with React Native (TypeScript)
 </div>
 
-## To Do - Fundamentals
+## TodoList - Fundamentals
 
 - [x] Make TodoList settings page directly accessible from TodoList_ListView 
 - [x] Add the ability to add/edit todo items in a list
@@ -14,16 +14,19 @@ Made with React Native (TypeScript)
 - [x] When unchecking bottom TodoItems, move back to top automatically
 - [x] Clear all checked todos
 - [ ] Due dates
-- [ ] Habits data structure
 - [ ] Todo success rate tracking
-- [ ] Begin habits/analytics page layout
-- [ ] Separate adder component for todo items (text bar at bottom? circular plus button in corner/both?)
 
-## TodoListView QoL
+## TodoList - QoL
 
 - [ ] FIX DRAG GLITCH
 - [ ] Repeating todos
 - [ ] Ability select multiple todos / batch actions
+
+## Habits - Fundamentals
+
+- [ ] Habits data structure
+- [ ] Begin habits/analytics page layout
+- [ ] Separate adder component for todo items (text bar at bottom? circular plus button in corner/both?)
 
 ##  User Data Structure  
 
