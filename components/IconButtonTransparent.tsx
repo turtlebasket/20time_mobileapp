@@ -12,8 +12,8 @@ export default function IconButtonTransparent(props: any) {
     <View style={{
     height: len,
     width: len,
-    margin: 10,
     marginHorizontal: 4,
+    marginVertical: 10,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',

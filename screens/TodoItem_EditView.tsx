@@ -6,15 +6,18 @@ import appColors from '../styles/Colors'
 import { TextInput } from 'react-native-gesture-handler'
 import React, { Component } from 'react';
 import { Alert, View } from 'react-native';
+import CalendarPicker from 'react-native-calendar-picker';
 
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import IconButtonCircle from '../components/IconButtonCircle';
-import { faArrowLeft, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCalendar, faCalendarAlt, faCalendarDay, faSave, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import { getTodoItem, getTodoList, removeTodoItem, setTodoItem } from '../data/UserData';
 import { v4 as uuidv4 } from 'uuid';
 import { Text } from 'react-native-svg';
+import SelectValueButtonTransparent from '../components/SelectValueButtonTransparent';
+import XButton from '../components/XButton';
 
 interface TodoEditorProps {
   id: string;
@@ -27,6 +30,7 @@ interface TodoEditorState {
   id: string;
   title: string;
   description: string;
+  dueDate?: string;
   complete: boolean;
 }
 
@@ -61,10 +65,7 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
       <View style={styles.container}>
 
         <View style={[styles.headerMultiline, {}]}>
-          <IconButtonTransparent icon={faArrowLeft} onPress={() => {
-            // navigation.navigate('TodoItems')
-            navigation.goBack();
-          }} />
+          <XButton/>
           <TextInput // title
             // must set both minwidth & width for some reason
             style={[styles.textBoxTitle, {minWidth: 170, width: 210}]} 
@@ -140,6 +141,18 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
           }}
           ref={React.createRef()}
         />
+
+        <SelectValueButtonTransparent icon={faCalendarDay} 
+        text={"Choose Due Date"} 
+        filled={this.state.dueDate ? true : false}
+        onPressSelect={() => {
+          navigation.navigate("PickDateTodoItem");
+        }}
+        onPressCancel={() => {
+          console.log("cancelled");
+        }}
+        />
+
       </View>
     );
   }

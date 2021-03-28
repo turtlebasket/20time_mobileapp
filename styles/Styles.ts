@@ -204,14 +204,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'transparent',
+    minHeight: 60,
     height: 60,
     maxHeight: 60,
     paddingHorizontal: 8,
-    // paddingVertical: 0,
     marginHorizontal: 10,
-    // marginBottom: 0,
     width: '100%',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
 
   headerMultiline: { // USED FOR EXPANDING TITLES

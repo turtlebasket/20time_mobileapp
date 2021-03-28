@@ -9,13 +9,14 @@ import { Alert, TouchableNativeFeedback, View } from 'react-native';
 
 import { NavigationProp, useLinkBuilder, useNavigation, useRoute } from '@react-navigation/native';
 import IconButtonCircle from '../components/IconButtonCircle';
-import { faArrowLeft, faEye, faEyeSlash, faRoute, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faEye, faEyeSlash, faRoute, faSave, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import { genUUIDTime, getTodoList, removeTodoItem, removeTodoList, setTodoList } from '../data/UserData';
 
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import XButton from '../components/XButton';
 
 interface TodoListEditorProps {
   id: string;
@@ -60,12 +61,9 @@ export class TodoListEditView extends Component<TodoListEditorProps, TodoListEdi
       <View style={styles.container}>
 
         <View style={[styles.header, {}]}>
-          <IconButtonTransparent icon={faArrowLeft} onPress={() => {
-            navigation.goBack();
-            // navigation.navigate('TodoLists')
-          }} />
+          <XButton/>
           <TextInput // title
-            autoFocus={true}
+            // autoFocus={true}
             style={[styles.textBoxTitle, {color: appColors.green1, minWidth: 90, width: 210}]}
             multiline={false}
             numberOfLines={1}

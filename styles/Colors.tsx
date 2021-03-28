@@ -18,7 +18,8 @@ export const appColors = {
   lighterGray: "#b0b0b0",
   green1: "#72B84D", // brightest
   red1: "#f24545", // for trash cans and errors
-  pink1: "#ff85cc"
+  pink1: "#ff85cc",
+  androidNavbarBackground: "#0E0D12",
 }
 
 export default appColors;
