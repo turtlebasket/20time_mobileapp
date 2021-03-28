@@ -12,7 +12,7 @@ import appColors from "./styles/Colors";
 
 // External
 import React, { Component } from 'react';
-import { StatusBar, View } from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -27,10 +27,14 @@ import {
 import TodoListView from './screens/TodoItem_ListView';
 import Todo from './screens/Todo';
 import appNavTheme from './styles/NavigationTheme';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
 const Tab = createBottomTabNavigator();
 
 const App = () => {
+
+  changeNavigationBarColor(appColors.androidNavbarBackground, false, true);
+
   return (
     <NavigationContainer
       theme={appNavTheme}
@@ -50,9 +54,10 @@ const App = () => {
             backgroundColor: appColors.dark,
             height: 50,
             borderTopWidth: 0,
+            // borderBottomWidth: Platform.OS == 'android' ? 1 : 0,
             // borderTopWidth: 1,
-            borderTopColor: appColors.lightGray
-            // borderTopColor: appColors.green1
+            borderTopColor: appColors.lightGray,
+            borderBottomColor: appColors.lightGray
           }
         }}
       >
