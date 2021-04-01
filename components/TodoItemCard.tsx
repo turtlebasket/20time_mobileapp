@@ -46,7 +46,6 @@ interface TodoItemCardState {
 export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemCardState> {
 
   state={
-  // complete: this.props.completeInitial,
     complete: this.props.complete ? this.props.complete : false,
     pressed: false
   };
@@ -67,9 +66,14 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
       onPressOut={() => {
         this.setState({pressed: false});
       }}
+      onPress={() => {
+        if (!this.state.complete) {
+          navigation.navigate('EditTodoItem', {id: this.props.id, listId: this.props.listId});
+        }
+      }}
       >
       <View style={[styles.card, {height: 67, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
-        this.props.selected ? {backgroundColor: appColors.darkSelected} : null]}>
+        this.props.selected ? {backgroundColor: appColors.darkSelected} : (this.props.complete ? {backgroundColor: appColors.darker} : null)]}>
         <View style={{flex: 1, flexDirection: 'row'}}>
         <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
           <TouchableWithoutFeedback
@@ -105,6 +109,7 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
           >{this.props.description}</Text>
         </View>
 
+        {/* COMMENT OUT EDIT BUTTON FOR NOW
         <View 
         style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center',
         display: this.state.complete ? 'none' : 'flex' }}>
@@ -120,6 +125,7 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
             />
           </TouchableWithoutFeedback>
         </View>
+        */}
         </View>
       </View>
       </TouchableWithoutFeedback>

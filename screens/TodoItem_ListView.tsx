@@ -125,8 +125,9 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
                 {
                   text: 'OK',
                   onPress: () => {
-                    clearSelectedTodos(this.props.id);
-                    this.refreshFromStorage();
+                    clearSelectedTodos(this.props.id).then(() => {
+                      this.refreshFromStorage();
+                    });
                   }
                 }
               ],

@@ -12,6 +12,7 @@ export const appColors = {
   white: "#ffffff",
   black: "#1B1823",
   dark: "#23242B",
+  darker: "#1E1E24",
   darkSelected: "#303038",
   midGray: "#424242",
   lightGray: "#707070",
