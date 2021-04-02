@@ -98,7 +98,7 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
     );
 
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} >
 
         <View style={[styles.header, 
         {maxHeight: 64, flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}]}>
@@ -144,7 +144,7 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
         {color: appColors.lightGray, display: this.state.todoItems.length > 0 ? 'none' : 'flex'}]}>
         Nothing here yet. Add some todos!</Text> */}
 
-        <DraggableFlatList
+        <DraggableFlatList keyboardShouldPersistTaps={"always"}
           style={{
             width: "100%",
             minWidth: "100%",

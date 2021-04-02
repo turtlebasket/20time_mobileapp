@@ -57,6 +57,7 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
   render() {
 
     const { navigation } = this.props
+    var { complete } = this.state
 
     return (
       <TouchableWithoutFeedback 
@@ -100,10 +101,11 @@ export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemC
         <Text 
           numberOfLines={1} 
           style={[
-          styles.pageTextBold, this.state.complete ? styles.strikethrough : null,
-          {width: 180}]}>{this.props.title}</Text>
+          styles.pageTextBold, complete ? styles.strikethrough : null,
+          {width: 180, color: complete ? appColors.lighterGray : appColors.white}]}>{this.props.title}</Text>
         <Text numberOfLines={1}
-        style={[styles.pageText, {width: 170, color: appColors.lighterGray, 
+        style={[styles.pageText, {width: 170, 
+          color: complete ? appColors.lightGray : appColors.lighterGray, 
           display: this.props.description ? 'flex' : 'none'},
           this.state.complete ? styles.strikethrough : null]}
           >{this.props.description}</Text>
