@@ -21,6 +21,7 @@ import {
   faCheckCircle,
   faCheckDouble,
   faDog, 
+  faHeart, 
   faMountain, 
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons'
@@ -28,6 +29,7 @@ import TodoListView from './screens/TodoItem_ListView';
 import Todo from './screens/Todo';
 import appNavTheme from './styles/NavigationTheme';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import ActivityListView from './screens/Activity_ListView';
 
 const Tab = createBottomTabNavigator();
 
@@ -71,11 +73,19 @@ const App = () => {
             <FontAwesomeIcon icon={faMountain} color={color} size={size}/>
           )}
         } />
+        <Tab.Screen name="Activity" component={ActivityListView} options={
+          {tabBarIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faHeart} color={color} size={size}/>
+          )}
+        } />
+
+        {/* HIDE THIS TEMPORARILY
         <Tab.Screen name="Shibe API" component={ConceptDemo} options={
           {tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faDog} color={color} size={size}/>
           )}
         } />
+        */}
         <Tab.Screen name="Profile" component={Profile} options={
           {tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faUserCircle} color={color} size={size}/>
