@@ -51,9 +51,8 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
     this.setState({id: uuid});
     // console.log(`UUID ${uuid}`)
     getTodoItem(this.props.listId, uuid).then(val => {
-      // console.log(`VAL ${val}`);
-      this.setState({title: val.title, description: val.description, complete: val.complete})
-      setTodoItem(this.props.listId, {complete: this.state.complete})
+      var complete: boolean = val.complete ? val.complete : false;
+      this.setState({title: val.title, description: val.description, complete: complete})
     });
   }
 
@@ -77,7 +76,7 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
             value={this.state.title}
             onChangeText={(contents: any) => {
               this.setState({title: contents});
-              setTodoItem(this.props.listId, {id: this.state.id, title: contents});
+              setTodoItem(this.props.listId, {id: this.state.id, title: contents, complete: this.state.complete});
             }}
           />
 

@@ -4,83 +4,56 @@
 import styles from '../styles/Styles'
 import appColors from '../styles/Colors'
 import { TextInput } from 'react-native-gesture-handler'
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { View } from 'react-native';
 
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import IconButtonCircle from '../components/IconButtonCircle';
 import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconButtonTransparent from '../components/IconButtonTransparent';
+import { getHabitList, setHabit } from '../data/UserData';
+import { v4 as uuidv4 } from 'uuid';
+import XButton from '../components/XButton';
 
-interface HabitEditorProps {
-  id: string;
-  navigation: any;
-  // onSave?: any;
+type props = {
+  route: any;
 }
 
-interface HabitEditorState {
-  title: string;
-  description: string;
-}
+export default function HabitEditView(props: props) {
+  const navigation = useNavigation();
+  const route = props.route;
 
-export class HabitEditView extends Component<HabitEditorProps, HabitEditorState> {
+  const [id, setId] = useState<string>();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-  constructor(props: any) {
-    super(props);
-    this.state={
-      title: "",
-      description: ""
-    };
-  }
-
-  componentDidMount() {
-    var currentUser: ""
-    AsyncStorage.getItem(this.props.id).then((value) => {
+  if (typeof route.params.id != 'undefined') {
+    getHabitList().then((val) => {
+      setId(route.params.id);
+      setTitle(val.title);
+      setDescription(val.description);
     })
   }
 
-  render() {
-
-    const { navigation } = this.props
-
-    return (
-      <View style={styles.container}>
-
-        <View style={[styles.header, {}]}>
-          <IconButtonTransparent icon={faArrowLeft} onPress={() => {
-            navigation.navigate('TodoItems')
-          }} />
-          <TextInput // title
-            style={[styles.textBoxTitle, {minWidth: 90}]}
-            multiline={false}
-            numberOfLines={1}
-            placeholder={"Title"}
-            placeholderTextColor={appColors.lightGray}
-            selectionColor={appColors.green1}
-            textAlign={'left'}
-          />
-          <View style={{marginLeft: 'auto'}}>
-            <IconButtonCircle icon={faSave} onPress={() => {
-              navigation.navigate("TodoItems")
-            }}/>
-          </View>
-        </View>
-
-        <TextInput // description
-          style={[styles.textBox, {minHeight: 120, maxHeight: 120, width: '94%'}]}
-          multiline={true}
-          placeholder={"Description"}
-          placeholderTextColor={appColors.lightGray}
-          selectionColor={appColors.green1}
-          textAlign={'left'}
+  return (
+    <View style={styles.container}>
+      <View style={styles.headerMultiline}>
+        <XButton/>
+        <TextInput style={styles.textBoxTitle}
+        multiline
+        placeholderTextColor={appColors.lightGray}
+        placeholder={"Habit Name"}
+        selectionColor={appColors.green1}
+        textAlign={'left'}
+        value={title}
+        onChangeText={(contents: any) => {
+          // setTitle(contents);
+          setHabit({id: id, title: contents});
+          console.log(contents);
+        }}
         />
       </View>
-    );
-  }
-}
-
-export default function HabitEditViewWrapped(props: any) {
-  const navigation = useNavigation();
-  return <HabitEditView {...props} navigation={navigation}/>;
+    </View>
+  );
 }

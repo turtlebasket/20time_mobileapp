@@ -59,7 +59,8 @@ const App = () => {
             // borderBottomWidth: Platform.OS == 'android' ? 1 : 0,
             // borderTopWidth: 1,
             borderTopColor: appColors.lightGray,
-            borderBottomColor: appColors.lightGray
+            borderBottomColor: appColors.lightGray,
+            paddingHorizontal: 14,
           }
         }}
       >

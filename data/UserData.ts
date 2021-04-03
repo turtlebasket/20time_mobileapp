@@ -132,11 +132,12 @@ export async function setTodoItem(listId: string, todo: any, end:boolean=false) 
   var user = await getCurrentUser();
   const todoList = getByGuid(user.todoLists, listId);
   if (todoList == null) return
-  var completeOld = false;
+  var completeOld: boolean;
   try {
     completeOld = getByGuid(todoList.todoItems, todo.id).complete;
+  } catch {
+    completeOld = false;
   }
-  catch{ /* Do nothing if null values */ }
   todoList.todoItems = setByGuid(todoList.todoItems, todo, end=end);
 
   // IF TODO NEWLY COMPLETED, MOVE DOWN TO "TOP OF BOTTOM"
@@ -206,8 +207,42 @@ export async function removeTodoItem(listId: string, todoId: string) {
  * --------------------------------------------------------
  */
 
+/**
+ * Get list of habits
+ * @returns List of habit objects
+ */
+export async function getHabitList() {
+  var user = await getCurrentUser();
+  return user.habits;
+}
 
+/**
+ * Get list of habit objects. USE SPARINGLY.
+ * @param habits New list of habit objects
+ */
+export async function setHabitList(habits: any) {
+  var user = await getCurrentUser();
+  user.habits = habits;
+  await setUser(user);
+}
 
+/**
+ * Set a habit object.
+ * @param habit Habit object to be set
+ */
+export async function setHabit(habit: any) {
+  var habits = await getHabitList();
+  const habitsNew = setByGuid(habits, habit, true);
+  console.log(JSON.stringify(habit))
+  console.log(JSON.stringify(habitsNew))
+  await setHabitList(habitsNew);
+}
+
+export async function removeHabit(id: string) {
+  var habits = await getHabitList();
+  habits = removeByGuid(habits, id);
+  await setHabitList(habits);
+}
 
 /* --------------------------------------------------
  *               CLOUD STORAGE HELPERS 
