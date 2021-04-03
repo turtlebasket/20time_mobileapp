@@ -207,8 +207,42 @@ export async function removeTodoItem(listId: string, todoId: string) {
  * --------------------------------------------------------
  */
 
+/**
+ * Get list of habits
+ * @returns List of habit objects
+ */
+export async function getHabitList() {
+  var user = await getCurrentUser();
+  return user.habits;
+}
 
+/**
+ * Get list of habit objects. USE SPARINGLY.
+ * @param habits New list of habit objects
+ */
+export async function setHabitList(habits: any) {
+  var user = await getCurrentUser();
+  user.habits = habits;
+  await setUser(user);
+}
 
+/**
+ * Set a habit object.
+ * @param habit Habit object to be set
+ */
+export async function setHabit(habit: any) {
+  var habits = await getHabitList();
+  const habitsNew = setByGuid(habits, habit, true);
+  console.log(JSON.stringify(habit))
+  console.log(JSON.stringify(habitsNew))
+  await setHabitList(habitsNew);
+}
+
+export async function removeHabit(id: string) {
+  var habits = await getHabitList();
+  habits = removeByGuid(habits, id);
+  await setHabitList(habits);
+}
 
 /* --------------------------------------------------
  *               CLOUD STORAGE HELPERS 
