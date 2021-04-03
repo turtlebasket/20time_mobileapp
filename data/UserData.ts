@@ -132,11 +132,12 @@ export async function setTodoItem(listId: string, todo: any, end:boolean=false) 
   var user = await getCurrentUser();
   const todoList = getByGuid(user.todoLists, listId);
   if (todoList == null) return
-  var completeOld = false;
+  var completeOld: boolean;
   try {
     completeOld = getByGuid(todoList.todoItems, todo.id).complete;
+  } catch {
+    completeOld = false;
   }
-  catch{ /* Do nothing if null values */ }
   todoList.todoItems = setByGuid(todoList.todoItems, todo, end=end);
 
   // IF TODO NEWLY COMPLETED, MOVE DOWN TO "TOP OF BOTTOM"
