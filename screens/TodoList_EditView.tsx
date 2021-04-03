@@ -136,7 +136,7 @@ export class TodoListEditView extends Component<TodoListEditorProps, TodoListEdi
                   text: 'OK',
                   onPress: () => {
                     removeTodoList(this.state.id).finally(() => {
-                      navigation.goBack();
+                      navigation.navigate("TodoLists");
                     });
                   }
                 }
