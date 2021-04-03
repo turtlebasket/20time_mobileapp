@@ -19,14 +19,21 @@ Made with React Native (TypeScript)
 ## TodoList - QoL
 
 - [ ] FIX DRAG GLITCH
+- [ ] Non-reorderable checked items (STAY AT BOTTOM!)
 - [ ] Repeating todos
 - [ ] Ability select multiple todos / batch actions
+- [ ] Separate adder component for todo items (text bar at bottom? circular plus button in corner/both?)
 
 ## Habits - Fundamentals
 
+- [x] Basic screens
 - [ ] Habits data structure
-- [ ] Begin habits/analytics page layout
-- [ ] Separate adder component for todo items (text bar at bottom? circular plus button in corner/both?)
+  - [ ] REPETITION STORAGE
+- [ ] Begin analytics/repetition-checking page layout (much like habits 🔄 app)
+
+## Activity Feed - Fundamentals
+
+- [ ] Connect to server & get some data
 
 ##  User Data Structure  
 
@@ -63,6 +70,16 @@ users: [
                 ]
             }
         ],
+        habits: [
+            {
+                id: "GUID",
+                title: "Go running",
+                repeatTimestamps: [ // short-term times; dynamnically generated for now
+                    "123123498233",
+                    "132409285029",
+                ]
+            }
+        ]
         connections: [ // friends
             "<guid>",
             "<guid>"
