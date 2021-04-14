@@ -125,16 +125,14 @@ export default function TodoItemCard(props: TodoItemCardProps) {
         {minWidth: '70%', maxWidth: '86%', color: complete ? appColors.lighterGray : appColors.white}]}>{title}</Text>
 
       <View style={{display: 'flex', flexDirection: 'row'}}>
-        <View style={{display: 'flex', flexDirection: 'row', marginRight: 8}}>
+        <View style={{flexDirection: 'row', marginRight: 8, display: typeof dueDate != 'undefined' ? 'flex' : 'none',}}>
           <FontAwesomeIcon icon={faCalendar} size={13} style={{
             alignSelf: 'center',
             marginRight: 4,
-            display: typeof dueDate != 'undefined' ? 'flex' : 'none',
             color: dateColor,
           }}/>
           <Text numberOfLines={1} style={[styles.pageText, 
             {
-              display: typeof dueDate != 'undefined' ? 'flex' : 'none',
               color: dateColor
             },
             complete ? styles.strikethrough : null]}>{`${dateObj.getMonth()+1}/${dateObj.getDate()}`}</Text>
