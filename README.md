@@ -4,6 +4,9 @@
 <h1>Social Todo Mobile App</h1>
 Made with React Native (TypeScript)
 </div>
+## Cloudable Data - Fundamentals
+
+- [ ] IMPORTANT - Migrate from async storage to RxDB
 
 ## TodoList - Fundamentals
 
@@ -13,7 +16,7 @@ Made with React Native (TypeScript)
 - [x] Automatically move checked TodoItems to bottom of TodoList, in order of most recent (in setTodoItem)
 - [x] When unchecking bottom TodoItems, move back to top automatically
 - [x] Clear all checked todos
-- [ ] Due dates
+- [x] Due dates
 - [ ] Todo success rate tracking
 
 ## TodoList - QoL
