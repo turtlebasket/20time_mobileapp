@@ -10,22 +10,25 @@ import {
   TouchableWithoutFeedback, 
   GestureResponderHandlers 
 } from 'react-native'
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import { View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { 
+  faCalendar,
+  faCalendarAlt,
   faCheckCircle, 
   faCircle, 
   faPencilAlt, 
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { setTodoItem } from '../data/UserData';
+import { getTodoList, setTodoItem } from '../data/UserData';
 import appConfig from '../data/AppConfig';
 
-interface TodoItemCardProps {
+type TodoItemCardProps = {
   id: string;
   title: string;
   description: string;
+  dueDate: string;
   complete: boolean | undefined;
   selected: boolean;
   dragBehavior: any;
@@ -34,103 +37,138 @@ interface TodoItemCardProps {
   refreshFromStorage: any;
 }
 
-interface TodoItemCardState {
+type TodoItemCardState = {
   complete: boolean;
   pressed: boolean;
+  dateColor: string;
 }
 
-/* NOTE FOR LATER
- * The order of interfaces listed in Component<if1, if2> is ranked by PROPS, STATE. 
- * PAY ATTENTION TO THAT.
- * */
-export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemCardState> {
+// export default class TodoItemCard extends Component<TodoItemCardProps, TodoItemCardState> {
+export default function TodoItemCard(props: TodoItemCardProps) {
 
-  state={
-    complete: this.props.complete ? this.props.complete : false,
-    pressed: false
-  };
+  const [complete, setComplete] = useState(props.complete ? props.complete : false);
+  const [pressed, setPressed] = useState(false);
+  const [dateColor, setDateColor] = useState(appColors.lighterGray);
+  
+  const { navigation, title, description, dueDate, id, listId, dragBehavior, selected, refreshFromStorage} = props;
+  // @ts-ignore
+  const dateObj = new Date(parseInt(dueDate));
+  const today = new Date()
 
-  constructor(props: any) {
-    super(props);
+  function updateDueDateColor() {
+    if (typeof dueDate != 'undefined') {
+      if (complete) {
+        setDateColor(appColors.lightGray)
+      }
+      else if (dateObj.getDate() == today.getDate() && dateObj.getMonth() == today.getMonth() && dateObj.getFullYear() == today.getFullYear()) { // if dueDate is today
+        setDateColor(appColors.green1);
+      }
+      else if (dateObj < today) { // if dueDate was earlier than today
+        setDateColor(appColors.red1);
+      }
+      else {
+        setDateColor(appColors.lighterGray);
+      }
+    }
   }
 
-  render() {
+  // IMPORTANT - use useEffect hook to update date color whenever date / completion status is changed / set
+  // NOTE: it runs on component init so we chillin
+  useEffect(() => {
+    updateDueDateColor();
+  }, [dueDate, complete])
 
-    const { navigation } = this.props
-    var { complete } = this.state
-
-    return (
-      <TouchableWithoutFeedback 
-      delayLongPress={appConfig.longPressDelay}
-      // onLongPress={() => {this.setState({pressed: true})}}
-      onLongPress={!this.state.complete ? this.props.dragBehavior : null}
-      onPressOut={() => {
-        this.setState({pressed: false});
-      }}
-      onPress={() => {
-        if (!this.state.complete) {
-          navigation.navigate('EditTodoItem', {id: this.props.id, listId: this.props.listId});
-        }
-      }}
-      >
-      <View style={[styles.card, {height: 67, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
-        this.props.selected ? {backgroundColor: appColors.darkSelected} : (this.props.complete ? {backgroundColor: appColors.darker} : null)]}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
-        <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
-          <TouchableWithoutFeedback
-          onPress={() => {
-            const newComp = !this.state.complete;
-            setTodoItem(this.props.listId, {id: this.props.id, complete: newComp}).then(() => {
-              this.setState({complete: newComp});
-              this.props.refreshFromStorage();
-            })
+  return (
+    <TouchableWithoutFeedback 
+    delayLongPress={appConfig.longPressDelay}
+    // onLongPress={() => {this.setState({pressed: true})}}
+    onLongPress={!complete ? dragBehavior : null}
+    onPressOut={() => {
+      setPressed(false);
+    }}
+    onPress={() => {
+      if (!complete) {
+        navigation.navigate('EditTodoItem', {id: id, listId: listId});
+      }
+    }}
+    >
+    <View style={[styles.card, {minHeight: 67, paddingHorizontal: 14, paddingVertical: 12, marginBottom: 6, justifyContent: 'center'}, 
+      selected ? {backgroundColor: appColors.darkSelected} : (complete ? {backgroundColor: appColors.darker} : null)]}>
+      <View style={{flex: 1, flexDirection: 'row'}}>
+      <View style={{margin: 'auto', justifyContent: 'center', alignContent: 'center'}}>
+        <TouchableWithoutFeedback
+        onPress={() => {
+          const newComp = !complete;
+          setTodoItem(listId, {id: id, complete: newComp}).then(() => {
+            setComplete(newComp);
+            refreshFromStorage();
+          })
+        }}
+        >
+        <FontAwesomeIcon 
+          icon={complete ? faCheckCircle : faCircle} 
+          size={33}
+          style={{
+          color: complete ? appColors.green1 : appColors.lightGray,
+          marginRight: 20,
           }}
-          >
-          <FontAwesomeIcon 
-            icon={this.state.complete ? faCheckCircle : faCircle} 
-            size={33}
-            style={{
-            color: this.state.complete ? appColors.green1 : appColors.lightGray,
-            marginRight: 20,
-            }}
-          />
-          </TouchableWithoutFeedback>
+        />
+        </TouchableWithoutFeedback>
+      </View>
+
+      <View style={{justifyContent: 'center'}}>
+      <Text 
+        // numberOfLines={1} 
+        style={[
+        styles.pageTextBold, complete ? styles.strikethrough : null,
+        // FIX TITLE WIDTH 
+        {minWidth: '70%', maxWidth: '86%', color: complete ? appColors.lighterGray : appColors.white}]}>{title}</Text>
+
+      <View style={{display: 'flex', flexDirection: 'row'}}>
+        <View style={{display: 'flex', flexDirection: 'row', marginRight: 8}}>
+          <FontAwesomeIcon icon={faCalendar} size={13} style={{
+            alignSelf: 'center',
+            marginRight: 4,
+            display: typeof dueDate != 'undefined' ? 'flex' : 'none',
+            color: dateColor,
+          }}/>
+          <Text numberOfLines={1} style={[styles.pageText, 
+            {
+              display: typeof dueDate != 'undefined' ? 'flex' : 'none',
+              color: dateColor
+            },
+            complete ? styles.strikethrough : null]}>{`${dateObj.getMonth()+1}/${dateObj.getDate()}`}</Text>
+
         </View>
 
-        <View style={{justifyContent: 'center'}}>
-        <Text 
-          numberOfLines={1} 
-          style={[
-          styles.pageTextBold, complete ? styles.strikethrough : null,
-          {width: 180, color: complete ? appColors.lighterGray : appColors.white}]}>{this.props.title}</Text>
         <Text numberOfLines={1}
         style={[styles.pageText, {width: 170, 
           color: complete ? appColors.lightGray : appColors.lighterGray, 
-          display: this.props.description ? 'flex' : 'none'},
-          this.state.complete ? styles.strikethrough : null]}
-          >{this.props.description}</Text>
-        </View>
-
-        {/* COMMENT OUT EDIT BUTTON FOR NOW
-        <View 
-        style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center',
-        display: this.state.complete ? 'none' : 'flex' }}>
-          <TouchableWithoutFeedback onPress={() => {
-            navigation.navigate('EditTodoItem', {id: this.props.id, listId: this.props.listId});
-          }}>
-            <FontAwesomeIcon 
-              icon={faPencilAlt} 
-              size={18} 
-              style={{
-              color: appColors.lightGray,
-              }}
-            />
-          </TouchableWithoutFeedback>
-        </View>
-        */}
-        </View>
+          display: description ? 'flex' : 'none'},
+          complete ? styles.strikethrough : null]}
+          >{description}</Text>
       </View>
-      </TouchableWithoutFeedback>
-    );
-  }
+      </View>
+
+      {/* COMMENT OUT EDIT BUTTON FOR NOW
+      <View 
+      style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center',
+      display: complete ? 'none' : 'flex' }}>
+        <TouchableWithoutFeedback onPress={() => {
+          navigation.navigate('EditTodoItem', {id: id, listId: listId});
+        }}>
+          <FontAwesomeIcon 
+            icon={faPencilAlt} 
+            size={18} 
+            style={{
+            color: appColors.lightGray,
+            }}
+          />
+        </TouchableWithoutFeedback>
+      </View>
+      */}
+      </View>
+    </View>
+    </TouchableWithoutFeedback>
+  );
 }

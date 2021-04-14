@@ -32,6 +32,7 @@ interface TodoEditorState {
   description: string;
   dueDate?: string;
   complete: boolean;
+  dateColor: string;
 }
 
 export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
@@ -42,7 +43,8 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
       id: "",
       title: "",
       description: "",
-      complete: false
+      complete: false,
+      dateColor: appColors.lighterGray,
     };
   }
 
@@ -52,13 +54,55 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
     // console.log(`UUID ${uuid}`)
     getTodoItem(this.props.listId, uuid).then(val => {
       var complete: boolean = val.complete ? val.complete : false;
-      this.setState({title: val.title, description: val.description, complete: complete})
+      this.setState({title: val.title, description: val.description, complete: complete, dueDate: val.dueDate})
+    }).then(() => {
+      this.updateDueDateColor();
     });
+  }
+
+  wantsToRefresh = this.props.navigation.addListener('focus', () => {
+    this.refreshFromStorage();
+  })
+
+  refreshFromStorage() {
+    getTodoItem(this.props.listId, this.state.id).then(val => {
+      this.setState({title: val.title, description: val.description, complete: val.complete, dueDate: val.dueDate})
+    }).then(() => {
+      this.updateDueDateColor();
+    });
+  }
+
+  updateDueDateColor() {
+    console.log("UPDATING")
+    const {dueDate, complete} = this.state;
+
+    // @ts-ignore
+    const dateObj = new Date(parseInt(dueDate));
+    const today = new Date();
+
+    if (typeof dueDate != 'undefined') {
+      if (dateObj.getDate() == today.getDate() && dateObj.getMonth() == today.getMonth() && dateObj.getFullYear() == today.getFullYear()) { // if dueDate is today
+        // setDateColor(appColors.green1);
+        this.setState({dateColor: appColors.green1})
+      }
+      else if (dateObj < today) { // if dueDate was earlier than today
+        // setDateColor(appColors.red1);
+        this.setState({dateColor: appColors.red1})
+      }
+      else {
+        // setDateColor(appColors.lighterGray);
+        this.setState({dateColor: appColors.lighterGray})
+      }
+    }
   }
 
   render() {
 
-    const { navigation } = this.props
+    const { navigation, listId } = this.props
+    const {id, title, description, complete} = this.state
+
+    // @ts-ignore
+    const dateObj = new Date(parseInt(this.state.dueDate))
 
     return (
       <View style={styles.container}>
@@ -142,13 +186,32 @@ export class TodoEditView extends Component<TodoEditorProps, TodoEditorState> {
         />
 
         <SelectValueButtonTransparent icon={faCalendarDay} 
-        text={"Choose Due Date"} 
-        filled={this.state.dueDate ? true : false}
+        text={this.state.dueDate ? `Due ${dateObj.getMonth()+1}/${dateObj.getDate()}/${dateObj.getFullYear()}` : "Choose Due Date"} 
+        color={this.state.dateColor}
+        filled={typeof this.state.dueDate != 'undefined'}
         onPressSelect={() => {
-          navigation.navigate("PickDateTodoItem");
+          navigation.navigate("PickDateTodoItem", {listId: listId, id: id});
+          
         }}
         onPressCancel={() => {
-          console.log("cancelled");
+          Alert.alert(
+            'Clear due date?',
+            'This action cannot be undone.',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => {/* do nothing */}
+              },
+              {
+                text: 'OK',
+                onPress: () => {
+                  setTodoItem(listId, {id: id, description: description, complete: complete, dueDate: undefined})
+                  this.setState({dueDate: undefined});
+                }
+              }
+            ],
+            {cancelable: false}
+          )
         }}
         />
 

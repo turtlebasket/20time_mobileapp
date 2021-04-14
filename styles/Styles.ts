@@ -174,6 +174,8 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     padding: 10,
     textAlignVertical: 'top',
+    textAlign: 'left',
+    width: '94%'
   },
 
   textBoxTitle: {

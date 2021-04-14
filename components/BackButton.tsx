@@ -1,3 +1,4 @@
+import React from "react";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "react-native/Libraries/NewAppScreen";

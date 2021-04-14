@@ -5,7 +5,7 @@ import styles from '../styles/Styles'
 import appColors from '../styles/Colors'
 import { TextInput } from 'react-native-gesture-handler'
 import React, { Component } from 'react';
-import { Alert, TouchableNativeFeedback, View } from 'react-native';
+import { Alert, ScrollView, TouchableNativeFeedback, View } from 'react-native';
 
 import { NavigationProp, useLinkBuilder, useNavigation, useRoute } from '@react-navigation/native';
 import IconButtonCircle from '../components/IconButtonCircle';
@@ -58,7 +58,7 @@ export class TodoListEditView extends Component<TodoListEditorProps, TodoListEdi
     const { navigation } = this.props
 
     return (
-      <View style={styles.container}>
+      <View style={styles.container} >
 
         <View style={[styles.header, {}]}>
           <XButton/>

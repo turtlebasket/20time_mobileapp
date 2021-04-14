@@ -38,7 +38,7 @@ class TodoAllView extends Component<AllViewProps, AllViewState> {
     }
   }
 
-  wantsToRefresh = this.props.navigation.addListener('focus', () => {
+ wantsToRefresh = this.props.navigation.addListener('focus', () => {
     this.refreshFromStorage();
   })
 

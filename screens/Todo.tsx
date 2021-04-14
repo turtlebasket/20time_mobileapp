@@ -6,7 +6,7 @@ import TodoAllViewWrapped from './TodoList_ListView';
 import TodoEditViewWrapped from './TodoItem_EditView';
 import TodoListViewWrapped from './TodoItem_ListView';
 import TodoListEditViewWrapped from './TodoList_EditView';
-import TodoItemDatePicker from './TodoItem_DatePicker';
+import TodoItemDatePickerView from './TodoItem_DatePickerView';
 
 const StackNav = createStackNavigator();
 
@@ -32,7 +32,7 @@ export default class Todo extends Component {
           ...TransitionPresets.ModalSlideFromBottomIOS,
         }}
         />
-        <StackNav.Screen name="PickDateTodoItem" component={TodoItemDatePicker}
+        <StackNav.Screen name="PickDateTodoItem" component={TodoItemDatePickerView}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
         }}

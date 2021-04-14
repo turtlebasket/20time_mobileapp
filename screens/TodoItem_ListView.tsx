@@ -14,7 +14,7 @@ import styles from "../styles/Styles"
 import TodoItemCard from '../components/TodoItemCard';
 import appColors from '../styles/Colors';
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native'
-import { faArrowLeft, faCheckDouble, faCocktail, faCog, faPlus, faPlusCircle, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCheckDouble, faCocktail, faCog, faPencilAlt, faPlus, faPlusCircle, faTasks } from '@fortawesome/free-solid-svg-icons';
 import IconButtonCircle from '../components/IconButtonCircle';
 import IconButtonTransparent from '../components/IconButtonTransparent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -75,11 +75,11 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
       id: string;
       title: string;
       description: string;
+      dueDate: string;
       complete?: boolean;
       selected?: boolean;
     }
 
-    const ref = React.createRef<TodoItemCard>(); // for use in TodoItemCard returned by renderItem()
     const renderItem = ({ item, index, drag, isActive }: RenderItemParams<TodoItem>) => (
       <View>
         <TodoItemCard
@@ -87,11 +87,11 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
           id={item.id}
           title={item.title} 
           description={item.description} 
+          dueDate={item.dueDate}
           selected={isActive}
           complete={item.complete}
           dragBehavior={drag}
           navigation={navigation}
-          ref={ref}
           refreshFromStorage={() => {this.refreshFromStorage(); this.render();}} 
         />
       </View>
@@ -109,11 +109,11 @@ export class TodoListView extends Component<ListViewProps, ListViewState> {
           >{this.state.todoName}</Text>
           {/* Snap all of these to the right */}
           <View style={{marginLeft: 'auto'}}> 
-            <IconButtonTransparent icon={faCog} color={appColors.lightGray} onPress={() => {
+            <IconButtonTransparent icon={faPencilAlt} color={appColors.lightGray} onPress={() => {
               navigation.navigate("EditTodoList", {id: this.props.id})
             }}/>
           </View>
-          <IconButtonTransparent icon={faTasks} color={appColors.red1} onPress={() => {
+          <IconButtonTransparent icon={faTasks} color={appColors.lightGray} onPress={() => {
             Alert.alert(
               'Clear all completed tasks?',
               'This action cannot be undone.',
