@@ -26,8 +26,16 @@ class HabitListView extends Component<HabitListProps, HabitListState> {
     super(props);
   }
 
+  wantsToRefresh = this.props.navigation.addListener('focus', () => {
+    this.refreshFromStorage();
+  })
+
   componentDidMount() {
     // this.setState({}); // ADD STUFF LATER
+    this.refreshFromStorage();
+  }
+
+  refreshFromStorage() {
     getHabitList().then((val: any) => {
       this.setState({habits: val ? val : []});
     })

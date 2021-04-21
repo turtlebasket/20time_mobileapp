@@ -5,14 +5,14 @@ import styles from '../styles/Styles'
 import appColors from '../styles/Colors'
 import { TextInput } from 'react-native-gesture-handler'
 import React, { Component, useState } from 'react';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 
 import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import IconButtonCircle from '../components/IconButtonCircle';
-import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconButtonTransparent from '../components/IconButtonTransparent';
-import { getHabitList, setHabit } from '../data/UserData';
+import { getHabit, getHabitList, removeHabit, setHabit } from '../data/UserData';
 import { v4 as uuidv4 } from 'uuid';
 import XButton from '../components/XButton';
 
@@ -24,13 +24,16 @@ export default function HabitEditView(props: props) {
   const navigation = useNavigation();
   const route = props.route;
 
+  // if I choose to do manual save instead of auto-save
+  const [edited, setEdited] = useState(false);
+
   const [id, setId] = useState<string>();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   if (typeof route.params.id != 'undefined') {
-    getHabitList().then((val) => {
-      setId(route.params.id);
+    getHabit(route.params.id).then((val) => {
+      setId(val.id);
       setTitle(val.title);
       setDescription(val.description);
     })
@@ -53,7 +56,43 @@ export default function HabitEditView(props: props) {
           console.log(contents);
         }}
         />
+        <View style={{marginLeft: 'auto'}}>
+          <IconButtonTransparent icon={faTrash} color={appColors.red1} onPress={() => {
+            Alert.alert(
+              'Delete Habit?',
+              'This action cannot be undone.',
+              [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log("cancelled")
+                },
+                {
+                  text: 'OK',
+                  onPress: () => {
+                    removeHabit(route.params.id).then(() => {
+                      navigation.navigate("HabitList")
+                    });
+                  }
+                }
+              ],
+              {cancelable: false}
+            )
+          }}/>
+        </View>
       </View>
+      <TextInput // description
+        style={[styles.textBox, {minHeight: 120, maxHeight: 120, width: '94%', color: appColors.lighterGray}]}
+        multiline={true}
+        placeholder={"Description"}
+        placeholderTextColor={appColors.lightGray}
+        selectionColor={appColors.lightGray}
+        textAlign={'left'}
+        value={description}
+        onChangeText={(contents) => {
+          setDescription(contents);
+          setHabit({id: id, title: title, description: contents})
+        }}
+      />
     </View>
   );
 }

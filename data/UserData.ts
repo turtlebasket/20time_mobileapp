@@ -212,8 +212,14 @@ export async function removeTodoItem(listId: string, todoId: string) {
  * @returns List of habit objects
  */
 export async function getHabitList() {
-  var user = await getCurrentUser();
+  const user = await getCurrentUser();
   return user.habits;
+}
+
+export async function getHabit(id: string) {
+  const habits = await getHabitList();
+  const habit = getByGuid(habits, id);
+  return habit;
 }
 
 /**
@@ -238,6 +244,10 @@ export async function setHabit(habit: any) {
   await setHabitList(habitsNew);
 }
 
+/**
+ * Removes habit from current user's habit list.
+ * @param id GUID of habit
+ */
 export async function removeHabit(id: string) {
   var habits = await getHabitList();
   habits = removeByGuid(habits, id);
