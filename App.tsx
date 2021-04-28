@@ -17,6 +17,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { 
+  faBroadcastTower,
   faCheck,
   faCheckCircle,
   faCheckDouble,
@@ -30,6 +31,9 @@ import Todo from './screens/Todo';
 import appNavTheme from './styles/NavigationTheme';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ActivityListView from './screens/Activity_ListView';
+import ConceptDemo2 from './screens/ConceptDemo2';
+import { ApolloProvider } from '@apollo/client';
+import { apolloClient } from './data/GqlUtil';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +42,7 @@ const App = () => {
   changeNavigationBarColor(appColors.androidNavbarBackground, false, true);
 
   return (
+    <ApolloProvider client={apolloClient}>
     <NavigationContainer
       theme={appNavTheme}
     >
@@ -69,24 +74,35 @@ const App = () => {
             <FontAwesomeIcon icon={faCheck} color={color} size={size}/>
             )}
         } />
+
         <Tab.Screen name="Habits" component={Habits} options={
           {tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faMountain} color={color} size={size}/>
           )}
         } />
+
         <Tab.Screen name="Activity" component={ActivityListView} options={
           {tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faHeart} color={color} size={size}/>
           )}
         } />
 
-        {/* HIDE THIS TEMPORARILY
-        <Tab.Screen name="Shibe API" component={ConceptDemo} options={
+        {/*
+        <Tab.Screen name="NetConcept" component={ConceptDemo2} options={
+          {tabBarIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faBroadcastTower} color={color} size={size}/>
+          )}
+        } />
+        */}
+
+        {/*
+        <Tab.Screen name="Concept Demo" component={ConceptDemo} options={
           {tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faDog} color={color} size={size}/>
           )}
         } />
         */}
+
         <Tab.Screen name="Profile" component={Profile} options={
           {tabBarIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faUserCircle} color={color} size={size}/>
@@ -94,6 +110,7 @@ const App = () => {
         } />
       </Tab.Navigator>
     </NavigationContainer>
+    </ApolloProvider>
   );
 }
 
