@@ -4,8 +4,6 @@
 
  // Project
 import Profile from './screens/Profile';
-import ListViewV2 from './screens/TodoItem_ListView';
-import TodoEditor from './screens/TodoItem_EditView';
 import ConceptDemo from './screens/ConceptDemo';
 import Habits from './screens/Habits';
 import appColors from "./styles/Colors";
@@ -22,6 +20,7 @@ import {
   faCheckCircle,
   faCheckDouble,
   faDog, 
+  faDoorOpen, 
   faHeart, 
   faMountain, 
   faUserCircle,
@@ -34,6 +33,7 @@ import ActivityListView from './screens/Activity_ListView';
 import ConceptDemo2 from './screens/ConceptDemo2';
 import { ApolloProvider } from '@apollo/client';
 import { apolloClient } from './data/GqlUtil';
+import LoginView from './screens/Login';
 
 const Tab = createBottomTabNavigator();
 

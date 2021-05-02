@@ -1,65 +1,26 @@
-import { faGripHorizontal } from '@fortawesome/free-solid-svg-icons';
-import React, { Component } from 'react';
-import { Image } from 'react-native';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Button,
-  TouchableNativeFeedback,
-  TouchableOpacityBase,
-  TouchableOpacity,
-  TouchableHighlight
-} from 'react-native';
-import { appColors } from '../styles/Colors';
-import TouchableCardBase from '../components/TouchableCard';
-import styles from '../styles/Styles';
-// import appColors from "../Colors";
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import React from 'react';
+import LoginView from './Login';
+import ProfileView from './ProfileView';
+import RegisterView from './Register';
 
-class Profile extends Component {
-  state = {
-    testText: "Initialized Value",
-    count: 0
-  }
+const StackNav = createStackNavigator();
 
-  options = {
-    gestureDirection: "horizontal"
-  }
+export default function Profile(props: any) {
 
-  render() {
-    return (
-
-      <SafeAreaView style={styles.container}>
-
-        <ScrollView>
-          <View style={styles.cardInvis}>
-            <Image 
-              source={{
-                uri: "https://assets3.thrillist.com/v1/image/1299823/size/tl-horizontal_main/7-weird-stock-images-of-people-struggling-with-basic-cooking"
-              }}
-              style={[styles.profilePictureLarge, {alignSelf: 'center'}]}
-            />
-          </View>
-
-          <View style= {styles.card}>
-            <Text style={styles.pageTitle}>Michael Profile (Demo)</Text>
-            <Text style={styles.pageTextGreenBold}>@Michael</Text>
-            <Text style={styles.pageText}>According to all known laws of aviation, there is no way a bee should be able to fly. Its wings are too small to get its fat little body off the ground.</Text>
-          </View>
-
-          <View style= {styles.card}>
-            <Text style={styles.pageTitle}>Habits</Text>
-            <Text style={styles.pageText}>Exercise</Text>
-            <Text style={styles.pageText}>Eat</Text>
-            <Text style={styles.pageText}>Sleep</Text>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
+  return (
+      <StackNav.Navigator
+        screenOptions={{ headerShown: false }}
+        >
+        <StackNav.Screen name="ProfileView" component={ProfileView}/>
+        <StackNav.Screen name="LoginView" component={LoginView}
+        options={{
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+        }}/>
+        <StackNav.Screen name="RegisterView" component={RegisterView}
+        options={{
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+        }}/>
+      </StackNav.Navigator>
+  );
 }
-
-export default Profile;

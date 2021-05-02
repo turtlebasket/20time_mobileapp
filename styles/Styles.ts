@@ -225,6 +225,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginHorizontal: 10,
     width: '100%',
+  },
+
+  textButton: {
+    borderRadius: 8, 
+    backgroundColor: appColors.green1,
+    color: appColors.white,
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  centered: {
+    alignSelf: 'center',
   }
 
 });
