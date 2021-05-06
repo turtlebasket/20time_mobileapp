@@ -70,7 +70,7 @@ class HabitListView extends Component<HabitListProps, HabitListState> {
           {/* Snap all of these to the right */}
           <View style={{marginLeft: 'auto'}}> 
             <IconButtonCircle icon={faPlus} onPress={() => {
-              navigation.navigate("EditHabitItem", {id: uuidv4()})
+              navigation.navigate("EditHabitItem", {id: uuidv4() as string})
             }} />
           </View>
         </View>

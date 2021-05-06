@@ -122,7 +122,8 @@ export default function TodoItemCard(props: TodoItemCardProps) {
         style={[
         styles.pageTextBold, complete ? styles.strikethrough : null,
         // FIX TITLE WIDTH 
-        {minWidth: '70%', maxWidth: '86%', color: complete ? appColors.lighterGray : appColors.white}]}>{title}</Text>
+        {flexGrow: 1, flexWrap: 'nowrap', minWidth: '40%', 
+        color: complete ? appColors.lighterGray : appColors.white}]}>{title}</Text>
 
       <View style={{display: 'flex', flexDirection: 'row'}}>
         <View style={{flexDirection: 'row', marginRight: 8, display: typeof dueDate != 'undefined' ? 'flex' : 'none',}}>

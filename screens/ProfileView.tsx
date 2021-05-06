@@ -37,9 +37,10 @@ export default function ProfileView(props: any) {
   }
   `));
   console.log(JSON.stringify(data));
-  if (data == undefined) {
-    navigation.navigate("RegisterView")
-  }
+  // UNCOMMENT ONCE IT'S TIME TO WORK ON NETWORKING
+  // if (data == undefined) {
+  //   navigation.navigate("RegisterView")
+  // }
 
   return (
     <SafeAreaView style={styles.container}>

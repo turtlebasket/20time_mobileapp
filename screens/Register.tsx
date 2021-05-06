@@ -2,7 +2,7 @@ import { gql, useMutation } from '@apollo/client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/core';
 import React, { useState } from 'react';
-import { Alert, ScrollView, Text, TextInput, TouchableNativeFeedback } from 'react-native';
+import { Alert, InputAccessoryView, ScrollView, Text, TextInput, TouchableNativeFeedback } from 'react-native';
 import { View } from 'react-native';
 import SingleLineTextBox from '../components/SingleLineTextBox';
 import appColors from '../styles/Colors';
@@ -20,8 +20,8 @@ export default function RegisterView(props: any) {
 
   const [registerUser, userRegistration] = useMutation(gql(`
   mutation {
-    userCreateOne(name:"${name}" email:"${email}") {
-      record{_id}
+    registerUser(type: $type) {
+      id type
     }
   }
   `));
@@ -34,8 +34,8 @@ export default function RegisterView(props: any) {
       <View style={styles.cardInvis}>
         <SingleLineTextBox label={"Name"} placeholder={"Name"} onChangeText={(contents: any) => setName(contents)} />
         <SingleLineTextBox placeholder={"Email address"} onChangeText={(contents: any) => setEmail(contents)}/>
-        <SingleLineTextBox placeholder={"Username"}onChangeText={(contents: any) => setUsername(contents)}/>
-        <SingleLineTextBox placeholder={"Password"} secureTextEntry={true}onChangeText={(contents: any) => setPassword(contents)}/>
+        <SingleLineTextBox placeholder={"Username"} onChangeText={(contents: any) => setUsername(contents)}/>
+        <SingleLineTextBox placeholder={"Password"} secureTextEntry={true} onChangeText={(contents: any) => setPassword(contents)}/>
         <SingleLineTextBox placeholder={"Confirm password"} secureTextEntry={true}onChangeText={(contents: any) => setPassword2(contents)}/>
         <View style={styles.centered}>
           <TouchableNativeFeedback  onPress={() => {
@@ -45,14 +45,14 @@ export default function RegisterView(props: any) {
               [{text: 'OK'}], {cancelable: false}
             )
             else {
-              registerUser().catch(e => {
+              registerUser({variables: {type: {name, email}}}).catch(e => {
                 Alert.alert(
                   'Failed to register', 'This is likely due to a server error. Please try again.',
                   [{text: 'OK'}], {cancelable: false}
                 )
-              }).then((val) => {
-                console.log(userRegistration)
-                // console.log(JSON.stringify(userRegistration.data))
+                console.log(e);
+              }).then(() => {
+                console.log(userRegistration);
               })
               // AsyncStorage.setItem("userId", )
               // navigation.navigate("ProfileView");
