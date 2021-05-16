@@ -19,8 +19,8 @@ export default function TodoItemDatePickerView(props: props) {
     <View style={styles.container}>
       <HeaderBasic title={"Choose Due Date"}/>
       <CalendarPicker
-      textStyle={[styles.pageText]}
-      todayBackgroundColor={appColors.lightGray}
+      textStyle={[styles.pageText, {color: appColors.lighterGray}]}
+      todayBackgroundColor={appColors.midGray}
       selectedDayColor={appColors.green1}
       onDateChange={(date) => {
         console.log(`DATE: ${date}`)

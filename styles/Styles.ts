@@ -236,6 +236,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
+  textButtonDark: {
+    borderRadius: 8, 
+    backgroundColor: appColors.dark,
+    color: appColors.white,
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  textButtonTransparent: {
+    borderRadius: 8, 
+    backgroundColor: 'transparent',
+    color: appColors.lightGray,
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
   centered: {
     alignSelf: 'center',
   }

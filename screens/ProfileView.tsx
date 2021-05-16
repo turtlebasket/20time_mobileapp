@@ -1,57 +1,36 @@
-import { faDoorOpen, faGripHorizontal } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faDoorOpen, faGripHorizontal } from '@fortawesome/free-solid-svg-icons';
 import React, { Component } from 'react';
 import { Image } from 'react-native';
 import {
   SafeAreaView,
-  StyleSheet,
   ScrollView,
   View,
   Text,
-  StatusBar,
-  Button,
-  TouchableNativeFeedback,
-  TouchableOpacityBase,
-  TouchableOpacity,
-  TouchableHighlight
 } from 'react-native';
 import { appColors } from '../styles/Colors';
 import styles from '../styles/Styles';
-import IconButtonCircle from '../components/IconButtonCircle';
 import { useNavigation } from '@react-navigation/core';
-import { gql, useQuery } from '@apollo/client';
-import { GraphQLError } from 'graphql';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import IconButtonTransparent from '../components/IconButtonTransparent';
 // import appColors from "../Colors";
 
 export default function ProfileView(props: any) {
 
   const navigation = useNavigation();
-  var id = "abc";
 
-  AsyncStorage.getItem("userId").then((val) => {
-    if (val != null) { id = val; }
-  })
-  let { data, refetch } = useQuery(gql(`
-  query {
-    userById(_id:"${id}")
-  }
-  `));
-  console.log(JSON.stringify(data));
-  // UNCOMMENT ONCE IT'S TIME TO WORK ON NETWORKING
-  // if (data == undefined) {
-  //   navigation.navigate("RegisterView")
-  // }
+  const iconSize = 22;
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <View style={{marginLeft: 'auto'}}>
+          <IconButtonTransparent icon={faCog} color={appColors.lightGray} iconSize={iconSize} onPress={() => {
+            navigation.navigate("ProfileEditView");
+          }}/>
+        </View>
+      </View>
 
       <ScrollView>
         <View style={styles.cardInvis}>
-          <View style={{marginLeft: 'auto'}}>
-            <IconButtonCircle icon={faDoorOpen} onPress={() => {
-              navigation.navigate("LoginView");
-            }}/>
-          </View>
           <Image 
             source={{
               uri: "https://assets3.thrillist.com/v1/image/1299823/size/tl-horizontal_main/7-weird-stock-images-of-people-struggling-with-basic-cooking"
@@ -74,5 +53,6 @@ export default function ProfileView(props: any) {
         </View>
       </ScrollView>
     </SafeAreaView>
+
   );
 }
