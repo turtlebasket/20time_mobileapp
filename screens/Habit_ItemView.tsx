@@ -31,19 +31,20 @@ export default function HabitItemView(props: props) {
 
   return (
       <SafeAreaView style={styles.container}>
-      <View style={styles.headerMultiline}>
-        <BackButton/>
-        <Text style={styles.textBoxTitle}>{title}</Text>
-        <View style={{marginLeft: 'auto'}}>
-          <IconButtonTransparent icon={faPencilAlt} color={appColors.lightGray} 
-          onPress={() => {
-            navigation.navigate("EditHabitItem", {id: route.params.id});
-          }}
-          />
+        <View style={styles.headerMultiline}>
+          <BackButton/>
+          <Text style={[styles.textBoxTitle, {marginTop: 12}]}>{title}</Text>
+          <View style={{marginLeft: 'auto'}}>
+            <IconButtonTransparent icon={faPencilAlt} color={appColors.lightGray} 
+            onPress={() => {
+              navigation.navigate("EditHabitItem", {id: route.params.id});
+            }}
+            />
+          </View>
         </View>
-      </View>
         <Text style={[styles.textBox, {color: appColors.lighterGray, width: '94%',
           display: description ? 'flex' : 'none' }]}>{description}</Text>
+          <View style={{height: 16}}/>
         <HabitProgressCard rate={0.86} subText="Last 7 Days"/>
         <HabitProgressCard rate={0.73} subText="Last Month"/>
         <HabitProgressCardGraph data={[0.1, 0.4, 0.3, 0.6, 0.7]}/>

@@ -171,8 +171,8 @@ const styles = StyleSheet.create({
   textBox: {
     color: appColors.white,
     fontSize: fontSizes.subtitle,
-    marginVertical: 4,
-    padding: 10,
+    // marginVertical: 4,
+    // padding: 10,
     textAlignVertical: 'top',
     textAlign: 'left',
     width: '94%'
@@ -182,9 +182,9 @@ const styles = StyleSheet.create({
     color: appColors.white,
     fontSize: fontSizes.title,
     fontWeight: 'bold',
-    marginVertical: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
+    // marginVertical: 10,
+    // paddingHorizontal: 12,
+    // paddingVertical: 4,
     minWidth: 170,
     textAlignVertical: 'top',
     flex: 3,
