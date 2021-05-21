@@ -13,6 +13,7 @@ export default function IconButtonCircle(props: any) {
       height: len,
       width: len,
       marginHorizontal: 5,
+      marginVertical: 10,
       borderRadius: len / 2,
       backgroundColor: appColors.green1,
       alignItems: 'center',
