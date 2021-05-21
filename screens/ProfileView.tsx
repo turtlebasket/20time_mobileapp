@@ -1,5 +1,5 @@
-import { faCog, faDoorOpen, faGripHorizontal } from '@fortawesome/free-solid-svg-icons';
-import React, { Component } from 'react';
+import { faCog, faDoorOpen, faGripHorizontal, faUser } from '@fortawesome/free-solid-svg-icons';
+import React, { Component, useContext, useEffect, useState } from 'react';
 import { Image } from 'react-native';
 import {
   SafeAreaView,
@@ -11,11 +11,17 @@ import { appColors } from '../styles/Colors';
 import styles from '../styles/Styles';
 import { useNavigation } from '@react-navigation/core';
 import IconButtonTransparent from '../components/IconButtonTransparent';
-// import appColors from "../Colors";
+import { supabase, userId } from '../data/SupabaseUtil';
+import HabitProgressCard from '../components/HabitProgressCard';
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchUserData } from '../api/api';
 
 export default function ProfileView(props: any) {
 
   const navigation = useNavigation();
+
+  const {data: userData, error } = useQuery('userData', fetchUserData);
+  const { name, bio, total, last_month } = userData;
 
   const iconSize = 22;
 
@@ -24,7 +30,7 @@ export default function ProfileView(props: any) {
       <View style={styles.header}>
         <View style={{marginLeft: 'auto'}}>
           <IconButtonTransparent icon={faCog} color={appColors.lightGray} iconSize={iconSize} onPress={() => {
-            navigation.navigate("ProfileEditView");
+            navigation.navigate("ProfileSettingsView");
           }}/>
         </View>
       </View>

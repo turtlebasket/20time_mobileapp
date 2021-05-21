@@ -17,9 +17,13 @@ export default function Profile(props: any) {
         screenOptions={{ headerShown: false }}
         >
         <StackNav.Screen name="ProfileView" component={ProfileView}/>
-        <StackNav.Screen name="ProfileSettingsView" component={ProfileSettingsHome}/>
+        <StackNav.Screen name="ProfileSettingsView" component={ProfileSettingsHome}
+        // options={{...TransitionPresets.SlideFromRightIOS}}
+        options={{...TransitionPresets.DefaultTransition}}
+
+        />
         <StackNav.Screen name="ProfileEditView" component={ProfileEditView}
-        options={{...TransitionPresets.ModalSlideFromBottomIOS}}
+        options={{...TransitionPresets.FadeFromBottomAndroid}}
         />
       </StackNav.Navigator>
   );
