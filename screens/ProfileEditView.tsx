@@ -1,9 +1,12 @@
-import { faSave } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
 import { Alert, Text, TextInput, View } from 'react-native';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { fetchUserData, setUserData } from '../api/api';
 import IconButtonCircle from '../components/IconButtonCircle';
-import { supabase } from '../data/SupabaseUtil';
+import IconButtonTransparent from '../components/IconButtonTransparent';
+import { supabase, userId } from '../data/SupabaseUtil';
 import appColors from '../styles/Colors';
 import styles from '../styles/Styles';
 
@@ -13,26 +16,37 @@ export default function ProfileEditView() {
   const [bio, setBio] = useState("");
 
   const navigation = useNavigation();
+  const queryClient = useQueryClient();
+
+  const { data: userData, error } = useQuery('userData', fetchUserData);
+  const userDataMutation = useMutation('userData', setUserData, {onSuccess: data => {
+    queryClient.invalidateQueries('userData')
+  }});
 
   useEffect(() => {
-    supabase.from('userData').select('userId')
+    setName(userData.name);
+    setBio(userData.bio);
   }, [])
 
   return (
     <View style={styles.container}>
+
       <View style={styles.header}>
+        <IconButtonTransparent icon={faTimes} onPress={navigation.goBack}/>
         <Text style={styles.pageTitleLargeGreen}>Edit Profile</Text>
+
         <View style={{marginLeft: 'auto'}}>
           <IconButtonCircle icon={faSave} onPress={() => {
-            // do some stuff here
+
+            userDataMutation.mutateAsync({ name: name, bio: bio })
             navigation.goBack();
+
           }}/>
         </View>
       </View>
       <View style={[styles.card, {width: "96%", minHeight: 100, flexDirection: 'column'}]}>
         <TextInput // title
-          // autoFocus={true}
-          style={[styles.textBox, {minWidth: 90, width: 210}]}
+          style={[styles.textBox, {width: 'auto', fontWeight: 'bold'}]}
           multiline={false}
           numberOfLines={1}
           placeholder={"Name"}
@@ -45,10 +59,8 @@ export default function ProfileEditView() {
           }}
         />
         <TextInput // title
-          // autoFocus={true}
-          style={[styles.textBox, {minWidth: 90, width: 210}]}
-          multiline={false}
-          numberOfLines={1}
+          style={[styles.textBox, {width: 'auto'}]}
+          multiline={true}
           placeholder={"Bio"}
           placeholderTextColor={appColors.lightGray}
           selectionColor={appColors.green1}
@@ -59,6 +71,7 @@ export default function ProfileEditView() {
           }}
         />
       </View>
+
     </View>
   );
 }

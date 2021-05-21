@@ -1,93 +1,69 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faRoute } from '@fortawesome/free-solid-svg-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
 import HabitCard from '../components/HabitCard';
 import IconButtonCircle from '../components/IconButtonCircle';
-import { getHabitList } from '../data/UserData';
+import { getHabitList } from '../data/UserDataLocal';
 import styles from '../styles/Styles';
-import {v4 as uuidv4} from 'uuid';
+import { useQuery } from 'react-query';
+import { fetchHabits } from '../api/api';
 
-interface HabitListProps {
-  navigation: any;
-}
-
-interface HabitListState {
+type HabitListState = {
   habits: any[];
 }
 
-class HabitListView extends Component<HabitListProps, HabitListState> {
-  state={
-    habits: []
-  }
+function HabitListView (props: any) {
+
+  const {data: habits, error} = useQuery('habits', fetchHabits);
+  // const [habits, setHabits] = useState([]);
   
-  constructor(props: any) {
-    super(props);
+  useEffect(() => {
+  }, []);
+
+  const navigation = useNavigation();
+
+  type HabitCard = {
+    id: string;
+    title: string;
   }
 
-  wantsToRefresh = this.props.navigation.addListener('focus', () => {
-    this.refreshFromStorage();
-  })
+  const renderItem = ({item, index, drag, isActive}: RenderItemParams<HabitCard>)  => (
+    <View>
+      <HabitCard
+      id={item.id}
+      title={item.title}
+      />
+    </View>
+  );
 
-  componentDidMount() {
-    // this.setState({}); // ADD STUFF LATER
-    this.refreshFromStorage();
-  }
+  return (
 
-  refreshFromStorage() {
-    getHabitList().then((val: any) => {
-      this.setState({habits: val ? val : []});
-    })
-  }
-
-  render() {
-
-    const { navigation } = this.props;
-
-    type HabitCard = {
-      id: string;
-      title: string;
-    }
-
-    const renderItem = ({item, index, drag, isActive}: RenderItemParams<HabitCard>)  => (
-      <View>
-        <HabitCard
-        id={item.id}
-        title={item.title}
-        />
-      </View>
-    );
-
-    const {habits} = this.state;
-
-    return (
-
-      <SafeAreaView style={styles.container}>
-        <View style={[styles.header, 
-        {maxHeight: 64, flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}]}>
-          <Text style={styles.pageTitleLargeGreen}>Habits</Text>
-          {/* Snap all of these to the right */}
-          <View style={{marginLeft: 'auto'}}> 
-            <IconButtonCircle icon={faPlus} onPress={() => {
-              navigation.navigate("EditHabitItem", {id: uuidv4() as string})
-            }} />
-          </View>
+    <SafeAreaView style={styles.container}>
+      <View style={[styles.header, 
+      {maxHeight: 64, flex: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}]}>
+        <Text style={styles.pageTitleLargeGreen}>Habits</Text>
+        {/* Snap all of these to the right */}
+        <View style={{marginLeft: 'auto'}}> 
+          <IconButtonCircle icon={faPlus} onPress={() => {
+            navigation.navigate("EditHabitItem", {id: undefined})
+          }} />
         </View>
+      </View>
 
-        <DraggableFlatList 
-        style={{
-          minWidth: "100%"
-        }}
-        dragItemOverflow={false}
-        data={habits}
-        renderItem={renderItem}
-        keyExtractor={(item: any, index) => `draggable-item-${item.id}`}
-        />
+      <DraggableFlatList 
+      style={{
+        minWidth: "100%"
+      }}
+      dragItemOverflow={false}
+      data={habits as HabitCard[]}
+      renderItem={renderItem}
+      keyExtractor={(item: any, index) => `draggable-item-${item.id}`}
+      />
 
-      </SafeAreaView>
-    );
-  }
+    </SafeAreaView>
+  );
 }
 
 export default function HabitListViewWrapper(props: any) {

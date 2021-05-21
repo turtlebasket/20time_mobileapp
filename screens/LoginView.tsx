@@ -1,10 +1,10 @@
-import { faFacebook, faGit, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
-import { Text, TouchableNativeFeedback, View } from 'react-native';
+import { Alert, Text, TouchableNativeFeedback, View } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
-import { handleEmailLogin, handleOAuthLogin, supabase } from '../data/SupabaseUtil';
+import { handleOAuthLogin, supabase } from '../data/SupabaseUtil';
 import appColors from '../styles/Colors';
 import styles from '../styles/Styles';
 
@@ -39,8 +39,11 @@ export default function LoginView() {
 
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           <TouchableNativeFeedback  onPress={() => {
-            handleEmailLogin(email, password).then(() => {
+            supabase.auth.signIn({email: email, password: password}).then(({user, session, data}) => {
               navigation.navigate("Home")
+            }).catch(e => {
+              Alert.alert("Alert", "There was a problem logging in. Please try again.");
+              console.log(e);
             });
           }}>
             <View style={[styles.textButton, {flexDirection: 'row', maxWidth: 100,}]}>

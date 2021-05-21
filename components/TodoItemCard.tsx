@@ -8,7 +8,8 @@ import {
   TouchableHighlight, 
   Text, 
   TouchableWithoutFeedback, 
-  GestureResponderHandlers 
+  GestureResponderHandlers, 
+  Vibration
 } from 'react-native'
 import React, { Component, useEffect, useState } from 'react'
 import { View } from 'react-native';
@@ -21,7 +22,7 @@ import {
   faPencilAlt, 
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { getTodoList, setTodoItem } from '../data/UserData';
+import { getTodoList, setTodoItem } from '../data/UserDataLocal';
 import appConfig from '../data/AppConfig';
 
 type TodoItemCardProps = {
@@ -81,7 +82,6 @@ export default function TodoItemCard(props: TodoItemCardProps) {
   return (
     <TouchableWithoutFeedback 
     delayLongPress={appConfig.longPressDelay}
-    // onLongPress={() => {this.setState({pressed: true})}}
     onLongPress={!complete ? dragBehavior : null}
     onPressOut={() => {
       setPressed(false);

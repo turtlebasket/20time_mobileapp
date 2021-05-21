@@ -11,9 +11,9 @@ import {
   Alert,
 } from 'react-native';
 import miscstyles from '../styles/MiscStyles';
-import '../data/UserData';
+import '../data/UserDataLocal';
 import { ScrollView } from 'react-native';
-import { getCurrentUserId, getByGuid, getTodoLists, getAllUsers, setByGuid, setTodoItem, setTodoList, jsonDiffKeys } from '../data/UserData';
+import { getCurrentUserId, getByGuid, getTodoLists, getAllUsers, setByGuid, setTodoItem, setTodoList, jsonDiffKeys } from '../data/UserDataLocal';
 import { TextInput } from 'react-native-gesture-handler';
 import appColors from '../styles/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';

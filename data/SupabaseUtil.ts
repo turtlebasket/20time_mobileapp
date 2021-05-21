@@ -2,21 +2,17 @@ import { createClient, GoTrueClient, Provider, Session, User } from '@supabase/s
 import appConfig from './AppConfig';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from 'react-native';
-import { createContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 const { supabaseUrl, supabaseKey } = appConfig;
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {localStorage: AsyncStorage});
 
-// User Context broadcast globally for all components
-export const UserContext = createContext<{user: User | null; session: Session | null}>({
-  user: null,
-  session: null
-})
-
-export const handleEmailLogin = async(email: string, password: string) => {
-  const {user, session, error} = await supabase.auth.signIn({email: password, password: password});
-  if (!error) Alert.alert("Account created!", "Check your inbox to verify your email.")
+// Get current user id
+export const userId = () => {
+  const user = supabase.auth.user();
+  if (!user) return null;
+  else return user.id;
 }
 
 export const handleOAuthLogin = async (provider: Provider) => {

@@ -14,7 +14,7 @@ export default function ActivityListView() {
     supabase.from('activities').select(`
     id,
     action,
-    userId,
+    user_id,
     target
     `).then(({data, error}) => {
       setPData(data);
@@ -28,7 +28,7 @@ export default function ActivityListView() {
 
   const renderItem = ({ item, index }: any) => {
 
-    const { userId, action, target } = item;
+    const { user_id, action, target } = item;
 
     const username = "User"; // get via userId later
 
