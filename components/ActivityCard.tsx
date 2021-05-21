@@ -40,7 +40,7 @@ export default function ActivityCard(props: props) {
     {flexDirection: 'row', width: '100%', maxHeight: 60, alignItems: 'center', marginHorizontal: 0}]}>
       <Image
         source={{
-          uri: "https://assets3.thrillist.com/v1/image/1299823/size/tl-horizontal_main/7-weird-stock-images-of-people-struggling-with-basic-cooking"
+          uri: "https://pce-coops.com/wp-content/uploads/2019/04/blank-profile-picture-973460_1280-e1561474127956.png"
         }}
         style={[styles.profilePictureSmall, {width: 42, height: 42, borderRadius: 21}]}
       />
