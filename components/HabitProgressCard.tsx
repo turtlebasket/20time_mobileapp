@@ -20,6 +20,7 @@ export default function HabitProgressCard(props: props) {
         animate={true}
          />
          <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 16}}>
+           <Text style={[styles.pageTitle, {position: 'absolute', }]}>{`${rate*100}% Success Rate`}</Text>
            <Text style={styles.pageTitle}>{`${rate*100}% Success Rate`}</Text>
            <Text style={[styles.pageTextLight, {display: subText ? 'flex' : 'none'}]}>{subText}</Text>
          </View>

@@ -94,6 +94,14 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.subtitle,
   },
 
+  pageTitleThin: {
+    fontFamily: "Nunito",
+    textAlign: "left",
+    color: appColors.white,
+    fontWeight: 'normal',
+    fontSize: fontSizes.subtitle,
+  },
+
   pageText: {
     color: appColors.white,
     fontSize: fontSizes.small,
@@ -170,25 +178,32 @@ const styles = StyleSheet.create({
 
   textBox: {
     color: appColors.white,
-    fontSize: fontSizes.subtitle,
-    // marginVertical: 4,
-    // padding: 10,
+    fontSize: fontSizes.normal,
     textAlignVertical: 'top',
     textAlign: 'left',
-    width: '94%'
+    width: 'auto',
+    // borderColor: appColors.lightGray,
+    // borderWidth: 1,
+    // borderRadius: 4,
+    // marginVertical: 2,
+    // paddingHorizontal: 6,
   },
 
   textBoxTitle: {
     color: appColors.white,
     fontSize: fontSizes.title,
     fontWeight: 'bold',
-    // marginVertical: 10,
-    // paddingHorizontal: 12,
-    // paddingVertical: 4,
     minWidth: 170,
     textAlignVertical: 'top',
     flex: 3,
-    // minHeight: 40,
+  },
+
+  textBoxSmall: {
+    color: appColors.white,
+    fontSize: fontSizes.small,
+    textAlignVertical: 'top',
+    textAlign: 'left',
+    width: 'auto'
   },
 
   borderBox: {
@@ -228,6 +243,7 @@ const styles = StyleSheet.create({
   },
 
   textButton: {
+    flexDirection: 'row',
     borderRadius: 8, 
     backgroundColor: appColors.green1,
     color: appColors.white,
@@ -237,6 +253,7 @@ const styles = StyleSheet.create({
   },
 
   textButtonDark: {
+    flexDirection: 'row',
     borderRadius: 8, 
     backgroundColor: appColors.dark,
     color: appColors.white,
@@ -246,6 +263,7 @@ const styles = StyleSheet.create({
   },
 
   textButtonTransparent: {
+    flexDirection: 'row',
     borderRadius: 8, 
     backgroundColor: 'transparent',
     color: appColors.lightGray,
