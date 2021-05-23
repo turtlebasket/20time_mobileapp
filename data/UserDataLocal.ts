@@ -178,11 +178,8 @@ export async function clearSelectedTodos(listId: string) {
   var user = await getCurrentUser();
   var todoList = getByGuid(user.todoLists, listId);
   var todoItems = todoList.todoItems;
-  console.log(`TODOITEMS ${JSON.stringify(todoItems)}`)
   for (let i = todoItems.length-1; i >= 0; i--) {
-    console.log(todoItems[i]);
     if (todoItems[i].complete) {
-      console.log("COMPLETED")
       todoItems.splice(i, 1);
     }
   }
@@ -239,8 +236,6 @@ export async function setHabitList(habits: any) {
 export async function setHabit(habit: any) {
   var habits = await getHabitList();
   const habitsNew = setByGuid(habits, habit, true);
-  console.log(JSON.stringify(habit))
-  console.log(JSON.stringify(habitsNew))
   await setHabitList(habitsNew);
 }
 
