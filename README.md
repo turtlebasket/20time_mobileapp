@@ -3,6 +3,10 @@
 Made with React Native (TypeScript)
 </div>
 
+| Todos                                                      | Habits                                                  | User                                                   |
+| ---------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------ |
+| <img title="" src="./screenshots/TodoListView.jpg" alt=""> | <img title="" src="./screenshots/HabitView.jpg" alt=""> | <img title="" src="./screenshots/UserView.jpg" alt=""> |
+
 ## To Do
 
 - [x] Migrate todo views to functional components
