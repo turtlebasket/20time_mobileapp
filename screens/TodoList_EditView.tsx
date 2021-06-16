@@ -12,7 +12,7 @@ import IconButtonCircle from '../components/IconButtonCircle';
 import { faArrowLeft, faEye, faEyeSlash, faRoute, faSave, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconButtonTransparent from '../components/IconButtonTransparent';
-import { genUUIDTime, getTodoList, removeTodoItem, removeTodoList, setTodoList } from '../data/UserData';
+import { genUUIDTime, getTodoList, removeTodoItem, removeTodoList, setTodoList } from '../data/UserDataLocal';
 
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';

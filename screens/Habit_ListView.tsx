@@ -10,10 +10,6 @@ import styles from '../styles/Styles';
 import { useQuery } from 'react-query';
 import { fetchHabits } from '../api/api';
 
-type HabitListState = {
-  habits: any[];
-}
-
 function HabitListView (props: any) {
 
   const {data: habits, error} = useQuery('habits', fetchHabits);
@@ -59,7 +55,7 @@ function HabitListView (props: any) {
       dragItemOverflow={false}
       data={habits as HabitCard[]}
       renderItem={renderItem}
-      keyExtractor={(item: any, index) => `draggable-item-${item.id}`}
+      keyExtractor={(item: HabitCard, index) => `draggable-item-${item.id}`}
       />
 
     </SafeAreaView>

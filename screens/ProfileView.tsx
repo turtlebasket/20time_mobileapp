@@ -52,8 +52,8 @@ export default function ProfileView(props: any) {
             <Text style={[styles.pageText, {display: bio ? 'flex' : 'none'}]}>{bio}</Text>
           </View>
 
-          <HabitProgressCard rate={total} subText='All Time - All Habits'/>
           <HabitProgressCard rate={last_month} subText='Last Month - All Habits'/>
+          <HabitProgressCard rate={total} subText='All Time - All Habits'/>
 
       </ScrollView>
     </SafeAreaView>

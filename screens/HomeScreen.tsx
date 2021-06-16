@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { fetchHabits, fetchUserData } from "../api/api";
+import { fetchHabits, fetchTodoLists, fetchUserData } from "../api/api";
 import { supabase, userId } from "../data/SupabaseUtil";
 import appColors from "../styles/Colors";
 import ActivityListView from "./Activity_ListView";
@@ -21,6 +21,7 @@ export default function HomeScreen() {
 
     queryClient.prefetchQuery('userData', fetchUserData);
     queryClient.prefetchQuery('habits', fetchHabits);
+    queryClient.prefetchQuery('todoLists', fetchTodoLists);
 
   }, [])
 

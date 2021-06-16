@@ -3,12 +3,12 @@
 Made with React Native (TypeScript)
 </div>
 
-
-
 ## To Do
 
 - [x] Migrate todo views to functional components
 
+- [ ] Habit repetitions storage (history)
+
 - [ ] Cloud-ify todos
 
-- [ ] Habit repetitions storage (history)
+- [ ] Make supabase user session persistent

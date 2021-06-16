@@ -58,11 +58,15 @@ export const fetchHabit = async (id: string) => {
   title, 
   description, 
   public
+  days->
   `).eq('id', id);
   // @ts-ignore
   return data[0];
 }
 
+/**
+ * UNTESTED
+ */
 export const setHabits = async (newData: object) => {
   const { data } = await supabase
   .from('habits')
@@ -87,6 +91,23 @@ export const removeHabit = async (id: string) => {
   if (error) console.log(error.message);
 }
 
+export const fetchHabitCompletionsLast5Days = async (habitId: string) => {
+  const { data, error } = await supabase
+  .from('activities')
+  .select(`
+    id,
+    target,
+    timestamp,
+    public
+  `)
+  .eq('user_id', userId())
+  .eq('action', 'habit')
+  .gte('timestamp', Date.);
+
+  if (error) console.log(error.message);
+  return data;
+}
+
 // Todo
 
 export const fetchTodoLists = async () => {
@@ -100,7 +121,36 @@ export const fetchTodoLists = async () => {
 }
 
 export const setTodoLists = async(newData: object) => {
-  const { data } = await supabase.from('todoLists')
+  const { data } = await supabase.from('todolists')
   .update(newData)
   .match({userId: userId() ?? ""});
+}
+
+export const fetchTodoList = async () => {
+  const { data } = await supabase.from('todolists')
+  .select(`
+    id,
+    title,
+    description
+  `)
+}
+
+export const removeTodoList = async (id: string) => {
+  const { error } = await supabase.from('todolists')
+  .delete()
+  .match({id: id})
+  if (error) console.log(error.message);
+}
+
+// Helper Functions
+
+// timestamps of last 5 days (POSTGRES COMPATIBLE)
+const last5DaysRange = async () => {
+  const today = new Date(); // reference
+  let tomorrow = new Date(today.setUTCDate(today.getUTCDate()+1)); // upper cutoff timestamp
+  let fiveDaysAgo = new Date(today.setUTCDate(today.getUTCDate()-5)); // lower cutoff timestamp
+  tomorrow.setUTCHours(0); tomorrow.setUTCMinutes(0); tomorrow.setUTCSeconds(0); tomorrow.setUTCMilliseconds(0);
+  fiveDaysAgo.setUTCHours(0); fiveDaysAgo.setUTCMinutes(0); fiveDaysAgo.setUTCSeconds(0); fiveDaysAgo.setUTCMilliseconds(0);
+  console.log([fiveDaysAgo, tomorrow]);
+  // return 
 }

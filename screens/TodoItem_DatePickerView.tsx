@@ -3,7 +3,7 @@ import React from "react"
 import { View } from "react-native"
 import CalendarPicker from "react-native-calendar-picker"
 import HeaderBasic from "../components/HeaderBasic"
-import { getTodoItem, setTodoItem } from "../data/UserData"
+import { getTodoItem, setTodoItem } from "../data/UserDataLocal"
 import appColors from "../styles/Colors"
 import styles from "../styles/Styles"
 

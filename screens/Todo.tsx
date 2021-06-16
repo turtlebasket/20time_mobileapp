@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import styles from '../styles/Styles';
 import TodoAllViewWrapped from './TodoList_ListView';
-import TodoEditViewWrapped from './TodoItem_EditView';
+import TodoEditView from './TodoItem_EditView';
 import TodoListViewWrapped from './TodoItem_ListView';
 import TodoListEditViewWrapped from './TodoList_EditView';
 import TodoItemDatePickerView from './TodoItem_DatePickerView';
@@ -27,7 +27,7 @@ export default class Todo extends Component {
           ...TransitionPresets.SlideFromRightIOS,
         }}
         />
-        <StackNav.Screen name="EditTodoItem" component={TodoEditViewWrapped}
+        <StackNav.Screen name="EditTodoItem" component={TodoEditView}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
         }}

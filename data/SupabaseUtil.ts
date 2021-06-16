@@ -11,7 +11,10 @@ export const supabase = createClient(supabaseUrl, supabaseKey, {localStorage: As
 // Get current user id
 export const userId = () => {
   const user = supabase.auth.user();
-  if (!user) return null;
+  if (!user) {
+    Alert.alert("USER LOGGED OUT!");
+    return null;
+  }
   else return user.id;
 }
 
